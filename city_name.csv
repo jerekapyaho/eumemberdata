@@ -10,6 +10,7 @@ amsterdam,et,Amsterdam
 amsterdam,fi,Amsterdam
 amsterdam,fr,Amsterdam
 amsterdam,hr,Amsterdam
+amsterdam,hu,Amszterdam
 amsterdam,it,Amsterdam
 amsterdam,lt,Amsterdamas
 amsterdam,lv,Amsterdama
@@ -25,6 +26,8 @@ athens,es,Atenas
 athens,et,Ateena
 athens,fi,Ateena
 athens,fr,Athènes
+athens,hr,Atena
+athens,hu,Athén
 athens,it,Atene
 athens,lt,Atėnai
 athens,lv,Atēnas
@@ -41,6 +44,7 @@ berlin,et,Berliin
 berlin,fi,Berliini
 berlin,fr,Berlin
 berlin,hr,Berlin
+berlin,hu,Berlin
 berlin,it,Berlino
 berlin,lt,Berlynas
 berlin,lv,Berlīne
@@ -57,6 +61,7 @@ bratislava,et,Bratislava
 bratislava,fi,Bratislava
 bratislava,fr,Bratislava
 bratislava,hr,Bratislava
+bratislava,hu,Pozsony
 bratislava,it,Bratislava
 bratislava,lt,Bratislava
 bratislava,lv,Bratislava
@@ -72,6 +77,7 @@ brussels,es,Bruselas
 brussels,et,Brüssel
 brussels,fr,Bruxelles
 brussels,hr,Bruxelles
+brussels,hu,Brüsszel
 brussels,it,Bruxelles
 brussels,lt,Briuselis
 brussels,lv,Brisele
@@ -88,6 +94,7 @@ bucharest,et,Bukarest
 bucharest,fi,Bukarest
 bucharest,fr,Bucarest
 bucharest,hr,Bukurešt
+bucharest,hu,Bukarest
 bucharest,it,Bucharest
 bucharest,lt,Bukareštas
 bucharest,lv,Bukareste
@@ -104,6 +111,7 @@ budapest,et,Budapest
 budapest,fi,Budapest
 budapest,fr,Budapest
 budapest,hr,Budimpešta
+budapest,hu,Budapest
 budapest,it,Budapest
 budapest,lt,Budapeštas
 budapest,lv,Budapešta
@@ -120,6 +128,7 @@ copenhagen,et,Kopenhaagen
 copenhagen,fi,Kööpenhamina
 copenhagen,fr,Copenhague
 copenhagen,hr,Kopenhagen
+copenhagen,hu,Koppenhága
 copenhagen,it,Copenaghen
 copenhagen,lt,Kopenhaga
 copenhagen,lv,Kopenhāgena
@@ -136,6 +145,7 @@ dublin,et,Dublin
 dublin,fi,Dublin
 dublin,fr,Dublin
 dublin,hr,Dublin
+dublin,hu,Dublin
 dublin,it,Dublino
 dublin,lt,Dublinas
 dublin,lv,Dublina
@@ -152,6 +162,7 @@ helsinki,et,Helsingi
 helsinki,fi,Helsinki
 helsinki,fr,Helsinki
 helsinki,hr,Helsinki
+helsinki,hu,Helsinki
 helsinki,it,Helsinki
 helsinki,lt,Helsinkis
 helsinki,lv,Helsinki
@@ -168,6 +179,7 @@ lisbon,et,Lissabon
 lisbon,fi,Lissabon
 lisbon,fr,Lisbonne
 lisbon,hr,Lisabon
+lisbon,hu,Lisszabon
 lisbon,it,Lisbona
 lisbon,lt,Lisabona
 lisbon,lv,Lisabona
@@ -184,6 +196,7 @@ ljubljana,et,Ljubljana
 ljubljana,fi,Ljubljana
 ljubljana,fr,Ljubljana
 ljubljana,hr,Ljubljana
+ljubljana,hu,Ljubljana
 ljubljana,it,Lubiana
 ljubljana,lt,Liubliana
 ljubljana,lv,Ļubļana
@@ -200,6 +213,7 @@ london,et,London
 london,fi,Lontoo
 london,fr,Londres
 london,hr,London
+london,hu,London
 london,it,Londra
 london,lt,Londonas
 london,lv,Londona
@@ -216,6 +230,7 @@ luxembourg,et,Luxembourg
 luxembourg,fi,Luxemburg
 luxembourg,fr,Luxembourg
 luxembourg,hr,Luxembourg
+luxembourg,hu,Luxembourg
 luxembourg,it,Lussemburgo
 luxembourh,lt,Liuksemburgas
 luxembourg,lv,Luksemburga
@@ -232,6 +247,7 @@ madrid,et,Madrid
 madrid,fi,Madrid
 madrid,fr,Madrid
 madrid,hr,Madrid
+madrid,hu,Madrid
 madrid,it,Madrid
 madrid,lt,Madridas
 madrid,lv,Madride
@@ -248,6 +264,7 @@ nicosia,et,Nikosia
 nicosia,fi,Nikosia
 nicosia,fr,Nicosie
 nicosia,hr,Nikozija
+nicosia,hu,Nicosia
 nicosia,it,Nicosia
 nicosia,lt,Nikosija
 nicosia,lv,Nikozija
@@ -263,6 +280,8 @@ paris,es,París
 paris,et,Pariis
 paris,fi,Pariisi
 paris,fr,Paris
+paris,hr,Pariz
+paris,hu,Párizs
 paris,it,Parigi
 paris,lt,Paryžius
 paris,lv,Parīze
@@ -279,6 +298,7 @@ prague,et,Praha
 prague,fi,Praha
 prague,fr,Prague
 prague,hr,Prag
+prague,hu,Prága
 prague,it,Praga
 prague,lt,Praha
 prague,lv,Prāga
@@ -295,6 +315,7 @@ riga,et,Riia
 riga,fi,Riika
 riga,fr,Riga
 riga,hr,Riga
+riga,hu,Riga
 riga,it,Riga
 riga,lt,Ryga
 riga,lv,Rīga
@@ -311,6 +332,7 @@ rome,et,Rooma
 rome,fi,Rooma
 rome,fr,Rome
 rome,hr,Rim
+rome,hu,Róma
 rome,it,Roma
 rome,lt,Roma
 rome,lv,Roma
@@ -327,6 +349,7 @@ sofia,et,Sofia
 sofia,fi,Sofia
 sofia,fr,Sofia
 sofia,hr,Sofija
+sofia,hu,Szófia
 sofia,it,Sofia
 sofia,lt,Sofija
 sofia,lv,Sofija
@@ -343,6 +366,7 @@ stockholm,et,Stockholm
 stockholm,fi,Tukholma
 stockholm,fr,Stockholm
 stockholm,hr,Stockholm
+stockholm,hu,Stockholm
 stockholm,it,Stoccolma
 stockholm,lt,Stokholmas
 stockholm,lv,Stokholma
@@ -359,6 +383,7 @@ tallinn,et,Tallinn
 tallinn,fr,Tallinn
 tallinn,fi,Tallinna
 tallinn,hr,Tallinn
+tallinn,hu,Tallinn
 tallinn,it,Tallinn
 tallinn,lt,Talinas
 tallinn,lv,Tallina
@@ -375,6 +400,7 @@ valletta,et,Valletta
 valletta,fi,Valletta
 valletta,fr,La Valette
 valletta,hr,Valletta
+valletta,hu,Valletta
 valletta,it,La Valletta
 valletta,lt,Valeta
 valletta,lv,Valeta
@@ -391,6 +417,7 @@ warsaw,et,Varssavi
 warsaw,fi,Varsova
 warsaw,fr,Varsovie
 warsaw,hr,Varšava
+warsaw,hu,Varsó
 warsaw,it,Varsavia
 warsaw,lt,Varšuva
 warsaw,lv,Varšava
@@ -407,6 +434,7 @@ vienna,et,Viin
 vienna,fi,Wien
 vienna,fr,Vienne
 vienna,hr,Beč
+vienna,hu,Bécs
 vienna,it,Vienna
 vienna,lt,Viena
 vienna,lv,Vīne
@@ -423,6 +451,7 @@ vilnius,et,Vilnius
 vilnius,fi,Vilna
 vilnius,fr,Vilnius
 vilnius,hr,Vilnius
+vilnius,hu,Vilnius
 vilnius,it,Vilnius
 vilnius,lt,Vilnius
 vilnius,lv,Viļņa
@@ -439,6 +468,7 @@ zagreb,et,Zagreb
 zagreb,fi,Zagreb
 zagreb,fr,Zagreb
 zagreb,hr,Zagreb
+zagreb,hu,Zágráb
 zagreb,it,Zagabria
 zagreb,lt,Zagrebas
 zagreb,lv,Zagreba
