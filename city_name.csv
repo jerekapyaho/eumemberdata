@@ -1,4 +1,4 @@
-city_id,language_code,city_name
+city_id,language_code,name
 amsterdam,bg,Амстердам
 amsterdam,cs,Amsterdam
 amsterdam,da,Amsterdam
@@ -80,8 +80,8 @@ bratislava,en,Bratislava
 bratislava,es,Bratislava
 bratislava,et,Bratislava
 bratislava,fi,Bratislava
-bratislava,ga,an Bhratasláiv
 bratislava,fr,Bratislava
+bratislava,ga,an Bhratasláiv
 bratislava,hr,Bratislava
 bratislava,hu,Pozsony
 bratislava,it,Bratislava
@@ -103,6 +103,7 @@ brussels,el,Βρυξέλλες
 brussels,en,Brussels
 brussels,es,Bruselas
 brussels,et,Brüssel
+brussels,fi,Brysseli
 brussels,fr,Bruxelles
 brussels,ga,an Bhruiséil
 brussels,hr,Bruxelles
@@ -185,6 +186,7 @@ copenhagen,lv,Kopenhāgena
 copenhagen,mt,Kopenħagen
 copenhagen,nl,Kopenhagen
 copenhagen,pl,Kopenhaga
+copenhagen,pt,Copenhaga
 copenhagen,ro,Copenhaga
 copenhagen,sk,Kodaň
 copenhagen,sl,København
