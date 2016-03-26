@@ -19,13 +19,9 @@ for table in tables:
             
             columns = ', '.join([column for column in csv_reader.fieldnames])
             values = ', '.join([':%s' % column for column in csv_reader.fieldnames])
-            print(values)
-            
             statement = 'insert into %s (%s) values (%s)' % (table, columns, values)
-            print(statement)
+
             cursor.executemany(statement, csv_reader)
             
             conn.commit()
             cursor.close()
-            
-            
