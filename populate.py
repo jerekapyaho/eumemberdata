@@ -3,25 +3,27 @@ import csv
 from collections import namedtuple
 
 db_filename = 'eumemberdata.sqlite3'
-conn = sqlite3.connect(db_filename)
 
-tables = ['country', 'country_name', 'city', 'city_name']
-
-for table in tables:
-    csv_filename = table + '.csv'
-    print('Processing %s' % csv_filename)
-    
+def populate_table(conn, table_name):
     with open(csv_filename) as csv_file:
         csv_reader = csv.DictReader(csv_file)
         
-        with sqlite3.connect(db_filename) as conn:
-            cursor = conn.cursor()
-            
-            columns = ', '.join([column for column in csv_reader.fieldnames])
-            values = ', '.join([':%s' % column for column in csv_reader.fieldnames])
-            statement = 'insert into %s (%s) values (%s)' % (table, columns, values)
+        columns = ', '.join([column for column in csv_reader.fieldnames])
+        values = ', '.join([':%s' % column for column in csv_reader.fieldnames])
+        statement = 'insert into %s (%s) values (%s)' % (table_name, columns, values)
 
-            cursor.executemany(statement, csv_reader)
-            
-            conn.commit()
-            cursor.close()
+        cursor = conn.cursor()
+        cursor.executemany(statement, csv_reader)
+        conn.commit()
+        cursor.close()
+
+table_names = ['country', 'country_name', 'city', 'city_name']
+
+for table_name in table_names:
+    csv_filename = table_name + '.csv'
+    print('Processing %s' % csv_filename)
+
+    conn = sqlite3.connect(db_filename)
+    populate_table(conn, table_name)    
+
+print('Done.')
