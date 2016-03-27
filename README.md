@@ -17,6 +17,13 @@ As per [RFC 4180](https://tools.ietf.org/html/rfc4180),
 the files use a CR LF line delimiter. They also have a header row,
 used to indicate database column names for further use.
 
+The `country_code` column values are the ISO 3166-1 Alpha-2 codes of the countries,
+with the following exceptions due to common usage by the European Commission: 
+Greece is represented with `EL`instead of `GR`, and the United Kingdom is
+represented with `GB` instead of `UK`.
+ 
+The `language_code` column values are the ISO 639-1 Alpha-2 codes of the languages.
+
 ## Database creation
 
 You can use the `eumemberdata.sql` script to create an SQLite 3 database.
@@ -37,7 +44,6 @@ After executing the SQL, you can issue the `.schema` command to check that
 the database tables have been created. You should see more or less the
 same as in `eumemberdata.sql` (minus the comments).
 
-The `.help` command gives you more information about the SQLite utility.
 Enter the `.quit` command to return to the shell.
 
 ## Populating the database
@@ -52,7 +58,7 @@ When you open the database file again, you should be able to make queries
 against the data:
 
 ```
-$ sqlite3 eumemberdata.sqlite3`
+$ sqlite3 eumemberdata.sqlite3
 SQLite version 3.8.5 2014-08-15 22:37:57
 Enter ".help" for usage hints.
 sqlite> select country_code, population from country;
@@ -62,4 +68,24 @@ BG|7245677.0
 .
 .
 .
+```
+
+## JSON output
+
+To use the EU member data in a mobile application, the aim is to make
+a JSON file with the following format:
+
+```json
+{"countries":[
+    {"code": "FI", 
+     "name": {"en": "Finland", "fi": "Suomi"},
+     "area": 338435,
+     "population": {"value": 5451270, "year": 2014},
+     "capital": {"name": {"en": "Helsinki", "fi": "Helsinki"},
+                 "coordinates":{"latitude":60.1708, "longitude": 24.9375}},
+     "joined": {"union": 1995, "eurozone": 1999, "schengen": 1996}},
+.
+.
+.     
+]}
 ```
