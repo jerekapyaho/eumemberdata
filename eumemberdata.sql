@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS country (
     country_code TEXT PRIMARY KEY NOT NULL,
     capital TEXT NOT NULL REFERENCES city(city_id),
     area INTEGER,
-    population FLOAT,
+    population INTEGER,
     population_year INTEGER,
     currency_code TEXT NOT NULL
 );
