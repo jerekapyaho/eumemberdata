@@ -62,9 +62,9 @@ $ sqlite3 eumemberdata.sqlite3
 SQLite version 3.8.5 2014-08-15 22:37:57
 Enter ".help" for usage hints.
 sqlite> select country_code, population from country;
-AT|8507786.0
-BE|11203992.0
-BG|7245677.0
+AT|8507786
+BE|11203992
+BG|7245677
 .
 .
 .
@@ -83,9 +83,9 @@ a JSON file with the following format:
      "population": {"value": 5451270, "year": 2014},
      "capital": {"name": {"en": "Helsinki", "fi": "Helsinki"},
                  "coordinates":{"latitude":60.1708, "longitude": 24.9375}},
-     "joined": {"union": 1995, "eurozone": 1999, "schengen": 1996}},
-.
-.
-.     
+     "joined": {"union": 1995, "eurozone": 1999, "schengen": 1996}}    
 ]}
 ```
+
+The above sample is abbreviated; the final JSON should include names for
+the countries and cities in all the languages.
