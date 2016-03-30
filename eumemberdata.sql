@@ -6,6 +6,8 @@
  * 'population_year' - the year of the population count
  * 'currency_code' - the currency code of the country's currency (can be used to
  * retrieve the currency name(s) from the 'currency_name' table)
+ * 'national_day' - the national day of this country in the Gregorian calendar,
+ * in the format '--MM-DD'
  */
 CREATE TABLE IF NOT EXISTS country (
     country_code TEXT PRIMARY KEY NOT NULL,
@@ -13,7 +15,8 @@ CREATE TABLE IF NOT EXISTS country (
     area INTEGER,
     population INTEGER,
     population_year INTEGER,
-    currency_code TEXT NOT NULL
+    currency_code TEXT NOT NULL,
+    national_day TEXT
 );
 
 /*
