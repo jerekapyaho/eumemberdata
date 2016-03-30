@@ -17,7 +17,7 @@ def populate_table(conn, table_name):
         conn.commit()
         cursor.close()
 
-table_names = ['country', 'country_name', 'city', 'city_name']
+table_names = ['country', 'country_name', 'city', 'city_name', 'union_name']
 
 for table_name in table_names:
     csv_filename = table_name + '.csv'
