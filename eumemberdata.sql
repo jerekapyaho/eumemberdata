@@ -77,3 +77,13 @@ CREATE TABLE IF NOT EXISTS joined(
     eurozone_year INTEGER,
     schengen_year INTEGER
 );
+
+/*
+ * The name of the European Union in the official languages.
+ * 'language_code' - the ISO 639 two-letter code, like 'en'
+ * 'name' - the name of the EU in the language indicated by 'language_code'
+ */
+CREATE TABLE IF NOT EXISTS union_name(
+    language_code TEXT NOT NULL,
+    name TEXT NOT NULL
+);
