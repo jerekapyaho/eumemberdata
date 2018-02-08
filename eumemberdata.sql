@@ -82,6 +82,20 @@ CREATE TABLE IF NOT EXISTS joined(
 );
 
 /*
+ * The dates when a country has joined the union, the eurozone, or the Schengen treaty.
+ * If the country is not a member of the eurozone or Schengen, the corresponding column value is NULL,
+ * otherwise the value is the date in the Gregorian calendar, expressed in the ISO 8601 standard format
+ * 'YYYY-MM-DD'. Onviously the date of joining the union cannot be NULL, since there are only member
+ * countries in this data.
+ */
+CREATE TABLE IF NOT EXISTS membership(
+    country_code TEXT NOT NULL REFERENCES country(country_code),
+    union_date TEXT NOT NULL,
+    euro_date TEXT,
+    schengen_date TEXT
+);
+
+/*
  * The name of the European Union in the official languages.
  * 'language_code' - the ISO 639 two-letter code, like 'en'
  * 'name' - the name of the EU in the language indicated by 'language_code'
