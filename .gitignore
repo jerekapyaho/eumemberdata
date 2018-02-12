@@ -6,3 +6,6 @@ __pycache__/
 *.py[cod]
 
 *.sqlite3
+
+# Java / Kotlin
+*.jar
