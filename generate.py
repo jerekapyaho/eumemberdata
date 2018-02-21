@@ -12,8 +12,16 @@ city_names = {}
 for city in c.execute('SELECT city_id, language_code, name FROM city_name'):
     city_id, lang, name = city[0], city[1], city[2]
     city_names.setdefault(city_id, {})[lang] = name 
-
 #print(city_names)
+
+cities = {}
+for city in c.execute('SELECT city_id, latitude, longitude FROM city'):
+    city_id, latitude, longitude = city[0], city[1], city[2]
+
+    city_dict = {'name': city_names[city_id], 
+                 'coordinate': {'longitude': longitude, 'latitude': latitude}}
+    cities[city_id] = city_dict
+#print(cities)
 
 country_codes = []
 for country in c.execute('SELECT country_code FROM country'):
@@ -31,10 +39,10 @@ for country_code in country_codes:
     country_names[country_code] = names
     
 countries = []
-for country in c.execute('SELECT * FROM country'):
+for country in c.execute('SELECT country_code, capital, area, population, population_year, currency_code, national_day FROM country'):
     country_dict = {'code': country[0],
                     'name': country_names[country[0]], 
-                    'capital': city_names[country[1]],
+                    'capital': cities[country[1]],
                     'area': country[2], 
                     'population': { 'population': country[3], 'year': country[4] }, 
                     'currency': country[5]}
