@@ -29,23 +29,32 @@ for country in c.execute('SELECT country_code FROM country'):
 #print('Country codes = %s' % country_codes)
 
 country_names = {}
+country_joins = {}  # key is country code, value is dictionary of join dates
 for country_code in country_codes:
-    statement = 'SELECT language_code, name FROM country_name WHERE country_code = "%s"' % country_code
-    
+    names_statement = 'SELECT language_code, name FROM country_name WHERE country_code = "%s"' % country_code
     names = {}
-    for name in c.execute(statement):
+    for name in c.execute(names_statement):
         names[name[0]] = name[1]
-
     country_names[country_code] = names
-    
+
+    joins_statement = 'SELECT country_code, union_date, euro_date, schengen_date FROM membership WHERE country_code = "%s"' % country_code
+    joins = {}
+    for join in c.execute(joins_statement):
+        joins['union'] = join[1]
+        joins['euro'] = join[2]
+        joins['schengen'] = join[3]
+    country_joins[country_code] = joins
+
 countries = []
 for country in c.execute('SELECT country_code, capital, area, population, population_year, currency_code, national_day FROM country'):
-    country_dict = {'code': country[0],
-                    'name': country_names[country[0]], 
+    country_code = country[0]
+    country_dict = {'code': country_code,
+                    'name': country_names[country_code], 
                     'capital': cities[country[1]],
                     'area': country[2], 
-                    'population': { 'population': country[3], 'year': country[4] }, 
-                    'currency': country[5]}
+                    'population': {'population': country[3], 'year': country[4]},
+                    'currency': country[5],
+                    'joined': country_joins[country_code]}
     countries.append(country_dict)
 
 data = {}

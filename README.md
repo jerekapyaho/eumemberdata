@@ -77,15 +77,39 @@ a JSON file with the following format:
 
 ```json
 {"countries":[
-    {"code": "FI", 
-     "name": {"en": "Finland", "fi": "Suomi"},
-     "area": 338435,
-     "population": {"value": 5451270, "year": 2014},
-     "capital": {"name": {"en": "Helsinki", "fi": "Helsinki"},
-                 "coordinates":{"latitude":60.1708, "longitude": 24.9375}},
-     "joined": {"union": 1995, "eurozone": 1999, "schengen": 1996}}    
+    {
+      "code": "FI",
+      "name": {
+        "en": "Finland",
+        "fi": "Suomi"
+      },
+      "capital": {
+        "name": {
+          "en": "Helsinki",
+          "fi": "Helsinki"
+        },
+        "coordinate": {
+          "longitude": 24.9375,
+          "latitude": 60.1708
+        }
+      },
+      "area": 338435,
+      "population": {
+        "population": 5451270,
+        "year": 2014
+      },
+      "currency": "EUR",
+      "joined": {
+        "union": "1995-01-01",
+        "euro": "1999-01-01",
+        "schengen": "2001-03-25"
+      }
+    }
 ]}
 ```
 
 The above sample is abbreviated; the final JSON should include names for
 the countries and cities in all the languages.
+
+Use the Python script `generate.py` to generate a JSON document with
+all the information in the database.
