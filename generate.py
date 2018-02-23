@@ -57,7 +57,4 @@ for country in c.execute('SELECT country_code, capital, area, population, popula
                     'joined': country_joins[country_code]}
     countries.append(country_dict)
 
-data = {}
-data['countries'] = countries
-
-print(json.dumps(data))
+print(json.dumps(countries))
