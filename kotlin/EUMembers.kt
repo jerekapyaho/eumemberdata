@@ -4,11 +4,17 @@ class City constructor(name: String, location: Coordinate) { }
 
 interface Member {
     val joinedUnionDate: String   // abstract property
+    var joinedSchengenDate: String? 
+    var joinedEurozoneDate: String?
+    var exitedUnionDate: String? 
     fun isFounder(): Boolean
 }
 
-class Country(val name: String, val capital: City?, val area: Long = 0L, val population: Long = 0L, joined: String): Member {
+class Country(val code: String, val name: String, val capital: City?, val area: Long = 0L, val population: Long = 0L, joined: String): Member {
     override val joinedUnionDate: String
+    override var joinedSchengenDate: String? = null
+    override var joinedEurozoneDate: String? = null
+    override var exitedUnionDate: String? = null
 
     override fun isFounder(): Boolean {
         return joinedUnionDate == "1958-01-01"
@@ -23,7 +29,19 @@ class Country(val name: String, val capital: City?, val area: Long = 0L, val pop
     override fun toString(): String {
         return this.name
     }
+}
 
+enum class EventType {
+    JOINED_UNION,
+    JOINED_EUROZONE,
+    JOINED_SCHENGEN,
+    EXITED_UNION
+}
+
+class Event(val country: Country, val eventType: EventType, val date: String) {
+    override fun toString(): String {
+        return "${country.name} $eventType $date" 
+    }
 }
 
 val officialLanguages = listOf(
@@ -1590,15 +1608,69 @@ fun printCountryNames() {
     println("Total country name count = $nameCount")
 }
 
-fun main(args: Array<String>) {
-    val finland = Country("Finland", City("Helsinki", Coordinate(60.1708, 24.9375)), 330_000L, 5_451_270L, "1995-01-01")
-    val sweden = Country("Sweden", City("Stockholm", Coordinate(59.3294, 18.0686)), 438_574L, 9_644_864L, "1995-01-01")
-    val belgium = Country("Belgium", City("Brussels", Coordinate(50.85, 4.35)), 30528L, 11_203_992L, "1958-01-01")
-    val austria = Country("Austria", City("Vienna", Coordinate(48.2089, 16.3725)), 83879L, 8_507_786L, "1995-01-01")
-    val czechRepublic = Country("Czech Republic", City("Prague", Coordinate(50.0833, 14.4167)), 78867L, 10_512_419L, "2004-05-01")
-    val netherlands = Country("Netherlands", City("Amsterdam", Coordinate(52.3731, 4.8922)), 41540L, 16_829_289L, "1958-01-01")
-    val bulgaria = Country("Bulgaria", City("Sofia", Coordinate(42.7, 23.3333)), 111_002L, 7_245_677L, "2007-01-01")
+fun getAllEvents(countries: List<Country>): List<Event> {
+    val events = mutableListOf<Event>()
+
+    for (country in countries) {
+        events.add(Event(country, EventType.JOINED_UNION, country.joinedUnionDate))
+        if (country.joinedEurozoneDate != null) {
+            events.add(Event(country, EventType.JOINED_EUROZONE, country.joinedEurozoneDate!!))
+        }
+        if (country.joinedSchengenDate != null) {
+            events.add(Event(country, EventType.JOINED_SCHENGEN, country.joinedSchengenDate!!))
+        }
+        if (country.exitedUnionDate != null) {
+            events.add(Event(country, EventType.EXITED_UNION, country.exitedUnionDate!!))
+        }
+    }
+
+    return events.toList()
+}
+
+fun printAllEvents(events: List<Event>) {
+    for (event in events) {
+        //println("${event.country.name} ${event.eventType} ${event.date}")
+        println(event)
+    }
+}
+
+// This is the original timeline used in the training
+fun printOriginalTimeline(countries: List<Country>) {
+    var joinsByDate = mutableMapOf<String, MutableList<String>>()
+    for (country in countries) {
+        if (joinsByDate.containsKey(country.joinedUnionDate)) {
+            joinsByDate[country.joinedUnionDate]!!.add(country.name)
+        }
+        else {
+            joinsByDate[country.joinedUnionDate] = mutableListOf<String>(country.name)
+        }
+    }
+    
+    println("Timeline:")
+    var joinDates = joinsByDate.keys.toList().sorted()
+    for (date in joinDates) {
+        val joinedCountries = joinsByDate[date]!!.sorted()
+        val lastIndex = joinedCountries.size - 1
+        val countryPart = when (joinedCountries.size) {
+            0 -> "***ERROR***"
+            1 -> joinedCountries[0]
+            2 -> joinedCountries.joinToString(" and ")
+            else -> "${ joinedCountries.subList(0, lastIndex).joinToString(", ") } and ${joinedCountries[lastIndex]}" 
+        }
+        println("$date: $countryPart joined the EU")
+    }
+}
+
+fun initData(): List<Country> {
+    val finland = Country("FI", "Finland", City("Helsinki", Coordinate(60.1708, 24.9375)), 330_000L, 5_451_270L, "1995-01-01")
+    val sweden = Country("SE", "Sweden", City("Stockholm", Coordinate(59.3294, 18.0686)), 438_574L, 9_644_864L, "1995-01-01")
+    val belgium = Country("BE", "Belgium", City("Brussels", Coordinate(50.85, 4.35)), 30528L, 11_203_992L, "1958-01-01")
+    val austria = Country("AT", "Austria", City("Vienna", Coordinate(48.2089, 16.3725)), 83879L, 8_507_786L, "1995-01-01")
+    val czechRepublic = Country("CZ", "Czech Republic", City("Prague", Coordinate(50.0833, 14.4167)), 78867L, 10_512_419L, "2004-05-01")
+    val netherlands = Country("NL", "Netherlands", City("Amsterdam", Coordinate(52.3731, 4.8922)), 41540L, 16_829_289L, "1958-01-01")
+    val bulgaria = Country("BG", "Bulgaria", City("Sofia", Coordinate(42.7, 23.3333)), 111_002L, 7_245_677L, "2007-01-01")
     val greece = Country(
+        "EL",
         "Greece",
         City(
             "Athens",
@@ -1608,6 +1680,7 @@ fun main(args: Array<String>) {
         "1981-01-01")
 
     val cyprus = Country(
+        "CY",
         "Cyprus",
         City(
             "Nicosia",
@@ -1617,6 +1690,7 @@ fun main(args: Array<String>) {
         "2004-05-01")
 
     val denmark = Country(
+        "DK",
         "Denmark",
         City(
             "Copenhagen",
@@ -1626,6 +1700,7 @@ fun main(args: Array<String>) {
         "1973-01-01")
 
     val estonia = Country(
+        "EE",
         "Estonia",
         City(
             "Tallinn",
@@ -1635,6 +1710,7 @@ fun main(args: Array<String>) {
         "2004-01-01")
 
     val france = Country(
+        "FR",
         "France",
         City(
             "Paris",
@@ -1644,6 +1720,7 @@ fun main(args: Array<String>) {
         "1958-01-01")
 
     val germany = Country(
+        "DE",
         "Germany",
         City(
             "Berlin",
@@ -1653,6 +1730,7 @@ fun main(args: Array<String>) {
         "1958-01-01")
 
     val hungary = Country(
+        "HU",
         "Hungary",
         City(
             "Budapest",
@@ -1662,6 +1740,7 @@ fun main(args: Array<String>) {
         "2004-01-01")
 
     val ireland = Country(
+        "IE",
         "Ireland",
         City(
             "Dublin",
@@ -1671,6 +1750,7 @@ fun main(args: Array<String>) {
         "1973-01-01")
 
     val latvia = Country(
+        "LV",
         "Latvia",
         City(
             "Riga",
@@ -1680,6 +1760,7 @@ fun main(args: Array<String>) {
         "2004-05-01")
 
     val lithuania = Country(
+        "LT",
         "Lithuania",
         City(
             "Vilnius",
@@ -1689,6 +1770,7 @@ fun main(args: Array<String>) {
         "2004-05-01")
 
     val luxembourg = Country(
+        "LU",
         "Luxembourg",
         City(
             "Luxembourg",
@@ -1698,6 +1780,7 @@ fun main(args: Array<String>) {
         "2004-05-01")
 
     val malta = Country(
+        "MT",
         "Malta",
         City(
             "Valletta",
@@ -1707,6 +1790,7 @@ fun main(args: Array<String>) {
         "2004-05-01")
 
     val poland = Country(
+        "PL",
         "Poland",
         City(
             "Warsaw",
@@ -1716,6 +1800,7 @@ fun main(args: Array<String>) {
         "2004-05-01")
 
     val portugal = Country(
+        "PT",
         "Portugal",
         City(
             "Lisbon",
@@ -1725,6 +1810,7 @@ fun main(args: Array<String>) {
         "1986-01-01")
 
     val romania = Country(
+        "RO",
         "Romania",
         City(
             "Bucharest",
@@ -1734,6 +1820,7 @@ fun main(args: Array<String>) {
         "2007-01-01")
 
     val slovakia = Country(
+        "SK",
         "Slovakia",
         City(
             "Bratislava",
@@ -1743,6 +1830,7 @@ fun main(args: Array<String>) {
         "2004-05-01")
 
     val slovenia = Country(
+        "SI",
         "Slovenia",
         City(
             "Ljubljana",
@@ -1752,6 +1840,7 @@ fun main(args: Array<String>) {
         "2004-05-01")
 
     val unitedKingdom = Country(
+        "GB",
         "United Kingdom",
         City(
             "London",
@@ -1761,6 +1850,7 @@ fun main(args: Array<String>) {
         "1973-01-01")
 
     val croatia = Country(
+        "HR",
         "Croatia",
         City(
             "Zagreb",
@@ -1770,6 +1860,7 @@ fun main(args: Array<String>) {
         "2013-07-01")
 
     val italy = Country(
+        "IT",
         "Italy",
         City(
             "Rome",
@@ -1779,6 +1870,7 @@ fun main(args: Array<String>) {
         "1958-01-01")
 
     val spain = Country(
+        "ES",
         "Spain",
         City(
             "Madrid",
@@ -1795,6 +1887,46 @@ fun main(args: Array<String>) {
         portugal, romania, slovakia, slovenia, unitedKingdom,
         croatia, italy, spain)
 
+    val eurozoneJoins = mapOf(
+        "1999-01-01" to listOf(austria, belgium, finland, france, germany, ireland, italy, luxembourg, netherlands, portugal, spain),
+        "2001-01-01" to listOf(greece),
+        "2007-01-01" to listOf(slovenia),
+        "2008-01-01" to listOf(cyprus, malta),
+        "2009-01-01" to listOf(slovakia),
+        "2011-01-01" to listOf(estonia),
+        "2014-01-01" to listOf(latvia),
+        "2015-01-01" to listOf(lithuania)
+    )
+
+    for (euroDate in eurozoneJoins.keys.toList()) {
+        val countries = eurozoneJoins[euroDate]!!
+        for (country in countries) {
+            country.joinedEurozoneDate = euroDate
+        }
+    }
+
+    val schengenJoins = mapOf(
+        "1995-03-26" to listOf(belgium, france, germany, luxembourg, netherlands, portugal, spain),
+        "1997-10-26" to listOf(italy),
+        "2000-01-01" to listOf(greece),
+        "2001-03-25" to listOf(denmark, finland, sweden),
+        "2007-12-01" to listOf(austria, czechRepublic, estonia, hungary, latvia, lithuania, malta, poland, slovakia, slovenia)
+    )
+
+    for (schengenDate in schengenJoins.keys.toList()) {
+        val countryCodes = schengenJoins[schengenDate]
+        for (country in countries) {
+            country.joinedSchengenDate = schengenDate
+        }
+    }
+
+    return countries.toList()
+}
+
+fun main(args: Array<String>) {
+    val countries = initData()
+    printOriginalTimeline(countries)
+
     /*
     var totalPopulationIterative = 0L
     for (country in countries) {
@@ -1809,32 +1941,10 @@ fun main(args: Array<String>) {
     println("Total population (functional, sum) = $totalPopulation")
     */
 
-    var joinsByDate = mutableMapOf<String, MutableList<String>>()
-    for (country in countries) {
-        if (joinsByDate.containsKey(country.joinedUnionDate)) {
-            joinsByDate[country.joinedUnionDate]!!.add(country.name)
-        }
-        else {
-            joinsByDate[country.joinedUnionDate] = mutableListOf<String>(country.name)
-        }
-    }
-    
-    //println(joinsByDate)
-    
-    println("Timeline:")
-    var joinDates = joinsByDate.keys.toList().sorted()
-    for (date in joinDates) {
-        val joinedCountries = joinsByDate[date]!!.sorted()
-        val lastIndex = joinedCountries.size - 1
-        val countryPart = when (joinedCountries.size) {
-            0 -> "***ERROR***"
-            1 -> joinedCountries[0]
-            2 -> joinedCountries.joinToString(" and ")
-            else -> "${ joinedCountries.subList(0, lastIndex).joinToString(", ") } and ${joinedCountries[lastIndex]}" 
-        }
-        println("$date: $countryPart joined the EU")
-    }
+    //printCityNames()
+    //printCountryNames()
 
-    printCityNames()
-    printCountryNames()
+    //val events = getAllEvents(countries)
+    //printAllEvents(events)
+
 }
