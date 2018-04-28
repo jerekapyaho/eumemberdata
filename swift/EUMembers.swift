@@ -15,18 +15,40 @@ class City {
     }
 }
 
+enum EventType {
+    case joinedUnion
+    case joinedEurozone
+    case joinedSchengen
+    case exitedUnion
+}
+
+struct Event: CustomStringConvertible {
+    var country: Country
+    var eventType: EventType
+    var date: String
+
+    var description: String {
+        return "\(country.name) \(eventType) \(date)"
+    }    
+}
+
 protocol Member {
     var joinedUnionDate: String { get }
+    var joinedEurozoneDate: String? { get }
+    var joinedSchengenDate: String? { get }
+    var exitedUnionDate: String? { get }
     func isFounder() -> Bool
 }
 
 class Country: Member, CustomStringConvertible {
+    var code: String
     var name: String = "unknown"
     var capital: City?
     var area: Int = 0
     var population: Int = 0
 
-    init(name: String, capital: City?, area: Int, population: Int, joined: String) {
+    init(code: String, name: String, capital: City?, area: Int, population: Int, joined: String) {
+        self.code = code
         self.name = name
         self.capital = capital
         self.area = area
@@ -46,9 +68,12 @@ class Country: Member, CustomStringConvertible {
     }
 
     //
-    // Member protocol implementation
+    // MARK: - Member protocol implementation
     //
     var joinedUnionDate: String
+    var joinedEurozoneDate: String? = nil
+    var joinedSchengenDate: String? = nil
+    var exitedUnionDate: String? = nil
     
     func isFounder() -> Bool {
         return self.joinedUnionDate == "1958-01-01"
@@ -1607,266 +1632,7 @@ func sortCityNames() {
     print("With a closure: \(rev)")
 }
 
-func printTimeline() {
-    let finland = Country(
-        name: "Finland",
-        capital: City(
-            name: "Helsinki",
-            location: Coordinate(latitude: 60.1708, longitude: 24.9375)),
-        area: 338_435,
-        population: 5_503_297,
-        joined: "1995-01-01")
-
-    let sweden = Country(
-        name: "Sweden",
-        capital: City(
-            name: "Stockholm",
-            location: Coordinate(latitude: 59.3294, longitude: 18.0686)),
-        area: 438_574,
-        population: 9_644_864,
-        joined: "1995-01-01")
-
-    let belgium = Country(
-        name: "Belgium",
-        capital: City(
-            name: "Brussels",
-            location: Coordinate(latitude: 50.85, longitude: 4.35)),
-        area: 30528,
-        population: 11_203_992,
-        joined: "1958-01-01")
-
-    let austria = Country(
-        name: "Austria",
-        capital: City(
-            name: "Vienna",
-            location: Coordinate(latitude: 48.2089, longitude: 16.3725)),
-        area: 83879,
-        population: 8507786,
-        joined: "1995-01-01")
-
-    let czechRepublic = Country(
-        name: "Czech Republic",
-        capital: City(
-            name: "Prague",
-            location: Coordinate(latitude: 50.0833, longitude: 14.4167)),
-        area: 78867,
-        population: 10512419,
-        joined: "2004-05-01")
-
-    let netherlands = Country(
-        name: "Netherlands",
-        capital: City(
-            name: "Amsterdam",
-            location: Coordinate(latitude: 52.3731, longitude: 4.8922)),
-        area: 41540,
-        population: 16829289,
-        joined: "1958-01-01")
-
-    let bulgaria = Country(
-        name: "Bulgaria",
-        capital: City(
-            name: "Sofia",
-            location: Coordinate(latitude: 42.7, longitude: 23.3333)),
-        area: 111002,
-        population: 7245677,
-        joined: "2007-01-01")
-
-    let greece = Country(
-        name: "Greece",
-        capital: City(
-            name: "Athens",
-            location: Coordinate(latitude: 37.9667, longitude: 23.7167)),
-        area: 131957,
-        population: 10992589,
-        joined: "1981-01-01")
-
-    let cyprus = Country(
-        name: "Cyprus",
-        capital: City(
-            name: "Nicosia",
-            location: Coordinate(latitude: 35.1667, longitude: 33.3667)),
-        area: 9251,
-        population: 858000,
-        joined: "2004-05-01")
-
-    let denmark = Country(
-        name: "Denmark",
-        capital: City(
-            name: "Copenhagen",
-            location: Coordinate(latitude: 55.6761, longitude: 12.5683)),
-        area: 42921,
-        population: 5627235,
-        joined: "1973-01-01")
-
-    let estonia = Country(
-        name: "Estonia",
-        capital: City(
-            name: "Tallinn",
-            location: Coordinate(latitude: 59.4372, longitude: 24.7453)),
-        area: 45227,
-        population: 1315819,
-        joined: "2004-01-01")
-
-    let france = Country(
-        name: "France",
-        capital: City(
-            name: "Paris",
-            location: Coordinate(latitude: 48.8567, longitude: 2.3508)),
-        area: 632833,
-        population: 65856609,
-        joined: "1958-01-01")
-
-    let germany = Country(
-        name: "Germany",
-        capital: City(
-            name: "Berlin",
-            location: Coordinate(latitude: 52.5167, longitude: 13.3833)),
-        area: 357340,
-        population: 80780000,
-        joined: "1958-01-01")
-
-    let hungary = Country(
-        name: "Hungary",
-        capital: City(
-            name: "Budapest",
-            location: Coordinate(latitude: 47.4719, longitude: 19.0503)),
-        area: 93024,
-        population: 9879000,
-        joined: "2004-01-01")
-
-    let ireland = Country(
-        name: "Ireland",
-        capital: City(
-            name: "Dublin",
-            location: Coordinate(latitude: 53.3478, longitude: -6.2597)),
-        area: 69797,
-        population: 4604029,
-        joined: "1973-01-01")
-
-    let latvia = Country(
-        name: "Latvia",
-        capital: City(
-            name: "Riga",
-            location: Coordinate(latitude: 56.9489, longitude: 24.1064)),
-        area: 64573,
-        population: 2001468,
-        joined: "2004-05-01")
-
-    let lithuania = Country(
-        name: "Lithuania",
-        capital: City(
-            name: "Vilnius",
-            location: Coordinate(latitude: 54.6833, longitude: 25.2833)),
-        area: 65300,
-        population: 2943472,
-        joined: "2004-05-01")
-
-    let luxembourg = Country(
-        name: "Luxembourg",
-        capital: City(
-            name: "Luxembourg",
-            location: Coordinate(latitude: 49.6117, longitude: 6.13)),
-        area: 2586,
-        population: 549680,
-        joined: "2004-05-01")
-
-    let malta = Country(
-        name: "Malta",
-        capital: City(
-            name: "Valletta",
-            location: Coordinate(latitude: 35.8978, longitude: 14.5125)),
-        area: 316,
-        population: 425384,
-        joined: "2004-05-01")
-
-    let poland = Country(
-        name: "Poland",
-        capital: City(
-            name: "Warsaw",
-            location: Coordinate(latitude: 52.2333, longitude: 21.0167)),
-        area: 312679,
-        population: 38495659,
-        joined: "2004-05-01")
-
-    let portugal = Country(
-        name: "Portugal",
-        capital: City(
-            name: "Lisbon",
-            location: Coordinate(latitude: 38.7136, longitude: -9.1392)),
-        area: 92225,
-        population: 10427301,
-        joined: "1986-01-01")
-
-    let romania = Country(
-        name: "Romania",
-        capital: City(
-            name: "Bucharest",
-            location: Coordinate(latitude: 44.4325, longitude: 26.1039)),
-        area: 238391,
-        population: 19942642,
-        joined: "2007-01-01")
-
-    let slovakia = Country(
-        name: "Slovakia",
-        capital: City(
-            name: "Bratislava",
-            location: Coordinate(latitude: 48.1439, longitude: 17.1097)),
-        area: 49035,
-        population: 5415949,
-        joined: "2004-05-01")
-
-    let slovenia = Country(
-        name: "Slovenia",
-        capital: City(
-            name: "Ljubljana",
-            location: Coordinate(latitude: 46.0556, longitude: 14.5083)),
-        area: 20273,
-        population: 2061085,
-        joined: "2004-05-01")
-
-    let unitedKingdom = Country(
-        name: "United Kingdom",
-        capital: City(
-            name: "London",
-            location: Coordinate(latitude: 51.5072, longitude: -0.1275)),
-        area: 248528,
-        population: 64308261,
-        joined: "1973-01-01")
-
-    let croatia = Country(
-        name: "Croatia",
-        capital: City(
-            name: "Zagreb",
-            location: Coordinate(latitude: 45.8167, longitude: 15.9833)),
-        area: 56594,
-        population: 4246700,
-        joined: "2013-07-01")
-
-    let italy = Country(
-        name: "Italy",
-        capital: City(
-            name: "Rome",
-            location: Coordinate(latitude: 41.9, longitude: 12.5)),
-        area: 302073,
-        population: 60782668,
-        joined: "1958-01-01")
-
-    let spain = Country(
-        name: "Spain",
-        capital: City(
-            name: "Madrid",
-            location: Coordinate(latitude: 40.3833, longitude: -3.7167)),
-        area: 505970,
-        population: 46507760,
-        joined: "1986-01-01")
-
-    let countries = [finland, sweden, czechRepublic, belgium, austria, 
-                     netherlands, bulgaria, greece, cyprus, denmark,
-                     estonia, france, germany, hungary, ireland,
-                     latvia, lithuania, luxembourg, malta, poland,
-                     portugal, romania, slovakia, slovenia, unitedKingdom,
-                     croatia, italy, spain]
-
+func printOriginalTimeline(_ countries: [Country]) {
     var joinsByDate = Dictionary<String, [String]>()
     for country in countries {
         //print("\(country.joinedUnionDate) \(country.name!)")
@@ -1967,8 +1733,358 @@ func printCountryNames() {
     print("Total country name count = \(nameCount)")
 }
 
+func initData() -> [Country] {
+   let finland = Country(
+        code: "FI",
+        name: "Finland",
+        capital: City(
+            name: "Helsinki",
+            location: Coordinate(latitude: 60.1708, longitude: 24.9375)),
+        area: 338_435,
+        population: 5_503_297,
+        joined: "1995-01-01")
+
+    let sweden = Country(
+        code: "SE",
+        name: "Sweden",
+        capital: City(
+            name: "Stockholm",
+            location: Coordinate(latitude: 59.3294, longitude: 18.0686)),
+        area: 438_574,
+        population: 9_644_864,
+        joined: "1995-01-01")
+
+    let belgium = Country(
+        code: "BE",
+        name: "Belgium",
+        capital: City(
+            name: "Brussels",
+            location: Coordinate(latitude: 50.85, longitude: 4.35)),
+        area: 30528,
+        population: 11_203_992,
+        joined: "1958-01-01")
+
+    let austria = Country(
+        code: "AT",
+        name: "Austria",
+        capital: City(
+            name: "Vienna",
+            location: Coordinate(latitude: 48.2089, longitude: 16.3725)),
+        area: 83879,
+        population: 8507786,
+        joined: "1995-01-01")
+
+    let czechRepublic = Country(
+        code: "CZ",
+        name: "Czech Republic",
+        capital: City(
+            name: "Prague",
+            location: Coordinate(latitude: 50.0833, longitude: 14.4167)),
+        area: 78867,
+        population: 10512419,
+        joined: "2004-05-01")
+
+    let netherlands = Country(
+        code: "NL",
+        name: "Netherlands",
+        capital: City(
+            name: "Amsterdam",
+            location: Coordinate(latitude: 52.3731, longitude: 4.8922)),
+        area: 41540,
+        population: 16829289,
+        joined: "1958-01-01")
+
+    let bulgaria = Country(
+        code: "BG",
+        name: "Bulgaria",
+        capital: City(
+            name: "Sofia",
+            location: Coordinate(latitude: 42.7, longitude: 23.3333)),
+        area: 111002,
+        population: 7245677,
+        joined: "2007-01-01")
+
+    let greece = Country(
+        code: "EL",
+        name: "Greece",
+        capital: City(
+            name: "Athens",
+            location: Coordinate(latitude: 37.9667, longitude: 23.7167)),
+        area: 131957,
+        population: 10992589,
+        joined: "1981-01-01")
+
+    let cyprus = Country(
+        code: "CY",
+        name: "Cyprus",
+        capital: City(
+            name: "Nicosia",
+            location: Coordinate(latitude: 35.1667, longitude: 33.3667)),
+        area: 9251,
+        population: 858000,
+        joined: "2004-05-01")
+
+    let denmark = Country(
+        code: "DK",
+        name: "Denmark",
+        capital: City(
+            name: "Copenhagen",
+            location: Coordinate(latitude: 55.6761, longitude: 12.5683)),
+        area: 42921,
+        population: 5627235,
+        joined: "1973-01-01")
+
+    let estonia = Country(
+        code: "EE",
+        name: "Estonia",
+        capital: City(
+            name: "Tallinn",
+            location: Coordinate(latitude: 59.4372, longitude: 24.7453)),
+        area: 45227,
+        population: 1315819,
+        joined: "2004-01-01")
+
+    let france = Country(
+        code: "FR",
+        name: "France",
+        capital: City(
+            name: "Paris",
+            location: Coordinate(latitude: 48.8567, longitude: 2.3508)),
+        area: 632833,
+        population: 65856609,
+        joined: "1958-01-01")
+
+    let germany = Country(
+        code: "DE",
+        name: "Germany",
+        capital: City(
+            name: "Berlin",
+            location: Coordinate(latitude: 52.5167, longitude: 13.3833)),
+        area: 357340,
+        population: 80780000,
+        joined: "1958-01-01")
+
+    let hungary = Country(
+        code: "HU",
+        name: "Hungary",
+        capital: City(
+            name: "Budapest",
+            location: Coordinate(latitude: 47.4719, longitude: 19.0503)),
+        area: 93024,
+        population: 9879000,
+        joined: "2004-01-01")
+
+    let ireland = Country(
+        code: "IE",
+        name: "Ireland",
+        capital: City(
+            name: "Dublin",
+            location: Coordinate(latitude: 53.3478, longitude: -6.2597)),
+        area: 69797,
+        population: 4604029,
+        joined: "1973-01-01")
+
+    let latvia = Country(
+        code: "LV",
+        name: "Latvia",
+        capital: City(
+            name: "Riga",
+            location: Coordinate(latitude: 56.9489, longitude: 24.1064)),
+        area: 64573,
+        population: 2001468,
+        joined: "2004-05-01")
+
+    let lithuania = Country(
+        code: "LT",
+        name: "Lithuania",
+        capital: City(
+            name: "Vilnius",
+            location: Coordinate(latitude: 54.6833, longitude: 25.2833)),
+        area: 65300,
+        population: 2943472,
+        joined: "2004-05-01")
+
+    let luxembourg = Country(
+        code: "LU",
+        name: "Luxembourg",
+        capital: City(
+            name: "Luxembourg",
+            location: Coordinate(latitude: 49.6117, longitude: 6.13)),
+        area: 2586,
+        population: 549680,
+        joined: "2004-05-01")
+
+    let malta = Country(
+        code: "MT",
+        name: "Malta",
+        capital: City(
+            name: "Valletta",
+            location: Coordinate(latitude: 35.8978, longitude: 14.5125)),
+        area: 316,
+        population: 425384,
+        joined: "2004-05-01")
+
+    let poland = Country(
+        code: "PL",
+        name: "Poland",
+        capital: City(
+            name: "Warsaw",
+            location: Coordinate(latitude: 52.2333, longitude: 21.0167)),
+        area: 312679,
+        population: 38495659,
+        joined: "2004-05-01")
+
+    let portugal = Country(
+        code: "PT",
+        name: "Portugal",
+        capital: City(
+            name: "Lisbon",
+            location: Coordinate(latitude: 38.7136, longitude: -9.1392)),
+        area: 92225,
+        population: 10427301,
+        joined: "1986-01-01")
+
+    let romania = Country(
+        code: "RO",
+        name: "Romania",
+        capital: City(
+            name: "Bucharest",
+            location: Coordinate(latitude: 44.4325, longitude: 26.1039)),
+        area: 238391,
+        population: 19942642,
+        joined: "2007-01-01")
+
+    let slovakia = Country(
+        code: "SK",
+        name: "Slovakia",
+        capital: City(
+            name: "Bratislava",
+            location: Coordinate(latitude: 48.1439, longitude: 17.1097)),
+        area: 49035,
+        population: 5415949,
+        joined: "2004-05-01")
+
+    let slovenia = Country(
+        code: "SI",
+        name: "Slovenia",
+        capital: City(
+            name: "Ljubljana",
+            location: Coordinate(latitude: 46.0556, longitude: 14.5083)),
+        area: 20273,
+        population: 2061085,
+        joined: "2004-05-01")
+
+    let unitedKingdom = Country(
+        code: "GB",
+        name: "United Kingdom",
+        capital: City(
+            name: "London",
+            location: Coordinate(latitude: 51.5072, longitude: -0.1275)),
+        area: 248528,
+        population: 64308261,
+        joined: "1973-01-01")
+
+    let croatia = Country(
+        code: "HR",
+        name: "Croatia",
+        capital: City(
+            name: "Zagreb",
+            location: Coordinate(latitude: 45.8167, longitude: 15.9833)),
+        area: 56594,
+        population: 4246700,
+        joined: "2013-07-01")
+
+    let italy = Country(
+        code: "IT",
+        name: "Italy",
+        capital: City(
+            name: "Rome",
+            location: Coordinate(latitude: 41.9, longitude: 12.5)),
+        area: 302073,
+        population: 60782668,
+        joined: "1958-01-01")
+
+    let spain = Country(
+        code: "ES",
+        name: "Spain",
+        capital: City(
+            name: "Madrid",
+            location: Coordinate(latitude: 40.3833, longitude: -3.7167)),
+        area: 505970,
+        population: 46507760,
+        joined: "1986-01-01")
+
+    let countries = [finland, sweden, czechRepublic, belgium, austria, 
+            netherlands, bulgaria, greece, cyprus, denmark,
+            estonia, france, germany, hungary, ireland,
+            latvia, lithuania, luxembourg, malta, poland,
+            portugal, romania, slovakia, slovenia, unitedKingdom,
+            croatia, italy, spain]
+
+    let eurozoneJoins: [String: [Country]] = [
+        "1999-01-01": [austria, belgium, finland, france, germany, ireland, italy, luxembourg, netherlands, portugal, spain],
+        "2001-01-01": [greece],
+        "2007-01-01": [slovenia],
+        "2008-01-01": [cyprus, malta],
+        "2009-01-01": [slovakia],
+        "2011-01-01": [estonia],
+        "2014-01-01": [latvia],
+        "2015-01-01": [lithuania]
+    ]
+
+    for euroDate in eurozoneJoins.keys {
+        let countries = eurozoneJoins[euroDate]!
+        for country in countries {
+            country.joinedEurozoneDate = euroDate
+        }
+    }
+
+    let schengenJoins: [String: [Country]] = [
+        "1995-03-26": [belgium, france, germany, luxembourg, netherlands, portugal, spain],
+        "1997-10-26": [italy],
+        "2000-01-01": [greece],
+        "2001-03-25": [denmark, finland, sweden],
+        "2007-12-01": [austria, czechRepublic, estonia, hungary, latvia, lithuania, malta, poland, slovakia, slovenia]
+    ]
+
+    for schengenDate in schengenJoins.keys {
+        let countries = schengenJoins[schengenDate]!
+        for country in countries {
+            country.joinedSchengenDate = schengenDate
+        }
+    }
+
+    return countries
+}
+
+func getAllEvents(_ countries: [Country]) -> [Event] {
+    var events = [Event]()
+
+    for country in countries {
+        events.append(Event(country: country, eventType: .joinedUnion, date: country.joinedUnionDate))
+        if let date = country.joinedEurozoneDate {
+            events.append(Event(country: country, eventType: .joinedEurozone, date: date))
+        }
+        if let date = country.joinedSchengenDate {
+            events.append(Event(country: country, eventType: .joinedSchengen, date: date))
+        }
+        if let date = country.exitedUnionDate {
+            events.append(Event(country: country, eventType: .exitedUnion, date: date))
+        }
+    }
+
+    return events.sorted { $0.date < $1.date }
+}
+
+func printAllEvents(_ events: [Event]) {
+    for event in events {
+        print(event)
+    }
+}
+
 func main() {
-    printTimeline()
+    let countries = initData()
+    printOriginalTimeline(countries)
 
 /*
     print(greeting1())
@@ -1980,8 +2096,10 @@ func main() {
 
     //sortCityNames()
 
-    printCityNames()
-    printCountryNames()
+    //printCityNames()
+    //printCountryNames()
+    let events = getAllEvents(countries)
+    printAllEvents(events)
 }
 
 main()
