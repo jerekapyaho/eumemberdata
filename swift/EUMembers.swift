@@ -2082,6 +2082,38 @@ func printAllEvents(_ events: [Event]) {
     }
 }
 
+func printTimeline(events: [Event]) {
+    let eventsByDate = Dictionary(grouping: events, by: { $0.date })
+    //print(eventsByDate)
+
+    for date in eventsByDate.keys.sorted() {
+        var line = "\(date): "
+        let eventList = eventsByDate[date]!
+        let eventsByType = Dictionary(grouping: eventList, by: { $0.eventType })
+        for eventType in eventsByType.keys {
+            let events = eventsByType[eventType]!
+            var countryNames = [String]()
+            for event in events {
+                countryNames.append(event.country.name)
+            }
+            line += countryNames.sorted().joined(separator: ", ")
+            var eventDescription = ""
+            switch eventType {
+            case .joinedUnion:
+                eventDescription = "joined the EU"
+            case .joinedSchengen:
+                eventDescription = "joined the Schengen agreement"
+            case .joinedEurozone:
+                eventDescription = "joined the Eurozone"
+            case .exitedUnion:
+                eventDescription = "exited the EU"
+            }
+            line += " \(eventDescription)."
+        }
+        print(line)
+    }
+}
+
 func main() {
     let countries = initData()
     printOriginalTimeline(countries)
@@ -2092,14 +2124,15 @@ func main() {
 
     print(greeting2())
     print(greeting2(name: "world"))
-*/
 
     //sortCityNames()
+*/
 
     //printCityNames()
     //printCountryNames()
     let events = getAllEvents(countries)
-    printAllEvents(events)
+    //printAllEvents(events)
+    printTimeline(events: events)
 }
 
 main()
