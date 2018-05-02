@@ -1923,6 +1923,41 @@ fun initData(): List<Country> {
     return countries.toList()
 }
 
+fun printTimeline(events: List<Event>) {
+    println("Timeline:")
+    val eventsByDate = events.groupBy { it.date }
+    println(eventsByDate)
+
+/*
+    for (date in eventsByDate.keys.sorted()) {
+        var line = "$date: "
+        val eventList = eventsByDate[date]!!
+        println(eventList)
+        val eventsByType = eventList.groupBy { it.eventType }
+        for (event in eventsByType.keys) {
+            val events = eventsByType[event]!!
+            var names = events.map { it.country.name }.sorted()
+            if (names.count() >= 2) {
+                val lastName = names.last()
+                line += names.dropLast(1).joinToString(separator = ", ")
+                line += " and $lastName"
+            }
+            else {
+                line += names.joinToString(separator = ", ")
+            }
+            val eventDescription = when (event.eventType) {
+                EventType.JOINED_UNION    -> "joined the EU"
+                EventType.JOINED_SCHENGEN -> "joined the Schengen agreement"
+                EventType.JOINED_EUROZONE -> "joined the Eurozone"
+                EventType.EXITED_UNION    -> "exited the EU"
+            }
+            line += " $eventDescription. "
+        }
+        print(line)
+    }
+*/
+}
+
 fun main(args: Array<String>) {
     val countries = initData()
     printOriginalTimeline(countries)
@@ -1944,7 +1979,8 @@ fun main(args: Array<String>) {
     //printCityNames()
     //printCountryNames()
 
-    //val events = getAllEvents(countries)
+    val events = getAllEvents(countries)
     //printAllEvents(events)
 
+    printTimeline(events)
 }
