@@ -1,5 +1,6 @@
 import sqlite3
 import json
+import argparse
 
 language_codes = ['bg', 'cs', 'da', 'de', 'el', 'en', 'es', 'et', 'fi', 'fr', 'ga', 'hr', 'hu', 'it', 'lt', 'lv', 'mt', 'nl', 'pl', 'pt', 'ro', 'sk', 'sl', 'sv']
 #print('Number of languages = %d' % len(language_codes))
@@ -57,4 +58,30 @@ for country in c.execute('SELECT country_code, capital, area, population, popula
                     'joined': country_joins[country_code]}
     countries.append(country_dict)
 
-print(json.dumps(countries))
+def swift_source():
+    def city_source(city):
+        return ''
+    src = ''
+
+    return src
+
+    
+def kotlin_source():
+    pass
+
+def main(output_type):
+    if output_type == 'json':
+        print(json.dumps(countries))
+    elif output_type == 'swift':
+        print('Generating Swift source code.')
+        print(swift_source())
+    elif output_type == 'kotlin':
+        print('Generating Kotlin source code.')
+    else:
+        print('Unknown output type "%s"' % output_type)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Generate JSON or source code.')
+    parser.add_argument('--output', required=True, help="Output type: json | swift | kotlin", default='json')
+    args = parser.parse_args()
+    main(args.output)
