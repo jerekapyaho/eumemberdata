@@ -138,5 +138,5 @@ The database for the REST API was created with:
 
 $ heroku addons:create heroku-postgresql:hobby-dev
 
-Heroku saves the URL of the database into your app as the DATABASE_URL
+Heroku saves the URL of the database into your app as the HEROKU_DATABASE_BRONZE_URL
 environment variable. The REST API app refers to this value.
