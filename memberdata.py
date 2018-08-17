@@ -3,7 +3,7 @@ import logging
 
 import psycopg2
 
-DATABASE_URL = os.environ['HEROKU_BRONZE_DATABASE_URL']
+DATABASE_URL = os.environ['HEROKU_POSTGRESQL_BRONZE_URL']
 
 language_codes = ['bg', 'cs', 'da', 'de', 'el', 'en', 'es', 'et', 'fi', 'fr', 'ga', 'hr', 'hu', 'it', 'lt', 'lv', 'mt', 'nl', 'pl', 'pt', 'ro', 'sk', 'sl', 'sv']
 
