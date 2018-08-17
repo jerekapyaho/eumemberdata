@@ -113,3 +113,30 @@ the countries and cities in all the languages.
 
 Use the Python script `generate.py` to generate a JSON document with
 all the information in the database.
+
+## REST API
+
+The data is also available as a REST API at https://eumemberdata.herokuapp.com.
+
+# Deploying to Heroku
+
+Create a Heroku app as described in the Heroku Dev Center notes for Python at https://devcenter.heroku.com/categories/python-support.
+
+For example, the REST API app was created with the Heroku CLI like this:
+
+$ heroku apps:create eumemberdata --region eu
+
+Prepare for deployment by creating a Procfile, installing the required libraries
+into your Python virtual environment, and collecting the
+libraries into requirements.txt with pip.
+
+# Preparing the PostgreSQL database
+
+The SQLite database is intended for mobile apps. In Heroku web apps SQLite is not an option for the database, since it requires a persistent database file. Instead, you can use the Heroku PostgreSQL add-on.
+
+The database for the REST API was created with:
+
+$ heroku addons:create heroku-postgresql:hobby-dev
+
+Heroku saves the URL of the database into your app as the DATABASE_URL
+environment variable. The REST API app refers to this value.
