@@ -5,7 +5,9 @@ from flask import Flask, request, Response
 
 from memberdata import get_countries, get_country, get_cities, get_city
 
-language_codes = ['bg', 'cs', 'da', 'de', 'el', 'en', 'es', 'et', 'fi', 'fr', 'ga', 'hr', 'hu', 'it', 'lt', 'lv', 'mt', 'nl', 'pl', 'pt', 'ro', 'sk', 'sl', 'sv']
+JSON_MIME_TYPE = 'application/json; charset=UTF-8'
+    
+app = Flask(__name__)
 
 @app.route('/countries/')
 def countries():
