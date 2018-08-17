@@ -30,7 +30,7 @@ def cities():
     resp = Response(response=json.dumps(items), status=200, mimetype=JSON_MIME_TYPE)
     return resp
 
-@app.route('/capital/<city_id>')    
+@app.route('/city/<city_id>')    
 def city(city_id):
     c = get_city(city_id)
     if c != None:
