@@ -143,11 +143,13 @@ def get_city(city_id):
 
 def get_updated():
     conn = None
+    timestamp = 0
     try:
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         cur.execute('SELECT timestamp FROM updated')
         result = cur.fetchall()
+        timestamp = result[0]
         cur.close()
     except psycopg2.Error as e:
         error_message = 'Error %s: %s' % (e.pgcode, e.pgerror)
@@ -156,4 +158,6 @@ def get_updated():
 
     finally:
         if conn:
-            conn.close()        
+            conn.close()
+
+    return timestamp
