@@ -140,3 +140,20 @@ def get_cities():
 def get_city(city_id):
     all_cities = get_cities()
     return next((c for c in all_cities if c['id'] == city_id), None)
+
+def get_updated():
+    conn = None
+    try:
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+        cur = conn.cursor()
+        cur.execute('SELECT timestamp FROM updated')
+        result = cur.fetchall()
+        cur.close()
+    except psycopg2.Error as e:
+        error_message = 'Error %s: %s' % (e.pgcode, e.pgerror)
+        logging.error(error_message)
+        return error_message
+
+    finally:
+        if conn:
+            conn.close()        

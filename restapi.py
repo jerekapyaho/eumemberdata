@@ -3,7 +3,7 @@ import json
 
 from flask import Flask, request, Response
 
-from memberdata import get_countries, get_country, get_cities, get_city
+from memberdata import get_countries, get_country, get_cities, get_city, get_updated
 
 JSON_MIME_TYPE = 'application/json; charset=UTF-8'
     
@@ -37,6 +37,17 @@ def city(city_id):
         resp = Response(response=json.dumps(c), status=200, mimetype=JSON_MIME_TYPE)
     else:
         resp = Response(response=json.dumps({}), status=404, mimetype=JSON_MIME_TYPE)
+    return resp
+
+@app.route('/updated')
+def updated():
+    timestamp = get_updated()
+    if timestamp != None:
+        # Return the timestamp as a simple JSON number (see ECMA-404 for details)
+        resp = Response(response=json.dumps(timestamp), status=200, mimetype=JSON_MIME_TYPE)
+    else:
+        # If there was no timestamp, return zero as a special case
+        resp = Response(response=json.dumps(0), status=200, mimetype=JSON_MIME_TYPE)
     return resp
 
 if __name__ == '__main__':
