@@ -43,11 +43,10 @@ def city(city_id):
 def updated():
     timestamp = get_updated()
     if timestamp != None:
-        # Return the timestamp as a simple JSON number (see ECMA-404 for details)
-        resp = Response(response=json.dumps(timestamp), status=200, mimetype=JSON_MIME_TYPE)
+        resp = Response(response=json.dumps({'updated': timestamp}), status=200, mimetype=JSON_MIME_TYPE)
     else:
         # If there was no timestamp, return zero as a special case
-        resp = Response(response=json.dumps(0), status=200, mimetype=JSON_MIME_TYPE)
+        resp = Response(response=json.dumps({'updated': 0}), status=200, mimetype=JSON_MIME_TYPE)
     return resp
 
 if __name__ == '__main__':
