@@ -147,9 +147,9 @@ def get_updated():
     try:
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
-        cur.execute('SELECT timestamp FROM updated')
+        cur.execute('SELECT timestamp FROM updated ORDER BY timestamp DESC LIMIT 1')
         result = cur.fetchall()
-        timestamp = result[0]
+        timestamp = result[0][0]
         cur.close()
     except psycopg2.Error as e:
         error_message = 'Error %s: %s' % (e.pgcode, e.pgerror)
