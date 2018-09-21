@@ -49,7 +49,7 @@ def get_countries():
             names_result = names_cursor.fetchall()
             names_for_language = {}
             for name in names_result:
-                names_for_language = {name[1]: name[2]}
+                names_for_language[name[1]] = name[2]
             country_names[cc] = names_for_language
             names_cursor.close()
 
