@@ -1,7 +1,7 @@
 import os
 import json
 
-from flask import Flask, request, Response, send_file
+from flask import Flask, request, Response, send_file, make_response
 
 from memberdata import get_countries, get_country, get_cities, get_city, get_updated
 from certificates import get_certificate
@@ -55,9 +55,10 @@ def updated():
 def certificate(cert_id):
     if cert_id != None:
         doc = get_certificate(cert_id)
-        return send_file(doc,
-                     attachment_filename='{}.pdf'.format(cert_id),
-                     mimetype=PDF_MIME_TYPE)
+        response = make_response(doc)
+        response.headers['Content-Type'] = PDF_MIME_TYPE
+        response.headers['Content-Disposition'] = 'inline; filename={}.pdf'.format(cert_id)
+        return response
     else:
         return Response(response=json.dumps({}), status=404, mimetype=JSON_MIME_TYPE)
 
