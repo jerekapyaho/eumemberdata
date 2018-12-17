@@ -1,6 +1,5 @@
 import os
 import json
-import io
 
 from flask import Flask, request, Response, send_file
 
@@ -56,7 +55,7 @@ def updated():
 def certificate(cert_id):
     if cert_id != None:
         doc = get_certificate(cert_id)
-        return send_file(io.BytesIO(doc.read()),
+        return send_file(doc,
                      attachment_filename='{}.pdf'.format(cert_id),
                      mimetype=PDF_MIME_TYPE)
     else:
