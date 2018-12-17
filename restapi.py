@@ -5,7 +5,7 @@ import io
 from flask import Flask, request, Response, send_file
 
 from memberdata import get_countries, get_country, get_cities, get_city, get_updated
-from certificate import get_certificate
+from certificates import get_certificate
 
 JSON_MIME_TYPE = 'application/json; charset=UTF-8'
 PDF_MIME_TYPE = 'application/pdf'
