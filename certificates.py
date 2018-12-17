@@ -18,7 +18,8 @@ def get_certificate(cert_id):
                         WHERE id = %s """,
                     (cert_id,))
  
-        doc = bytes(cur.fetchone())  # turn a memory view into bytes
+        m = cur.fetchone()
+        doc = m.tobytes()  # turn a memory view into bytes
 
         # close the communication with the PostgresQL database
         cur.close()

@@ -55,10 +55,13 @@ def updated():
 def certificate(cert_id):
     if cert_id != None:
         doc = get_certificate(cert_id)
-        response = make_response(doc)
-        response.headers['Content-Type'] = PDF_MIME_TYPE
-        response.headers['Content-Disposition'] = 'inline; filename={}.pdf'.format(cert_id)
-        return response
+        if doc != None:
+            response = make_response(doc)
+            response.headers['Content-Type'] = PDF_MIME_TYPE
+            response.headers['Content-Disposition'] = 'inline; filename={}.pdf'.format(cert_id)
+            return response
+        else:
+            return Response(response=json.dumps({}), status=404, mimetype=JSON_MIME_TYPE)    
     else:
         return Response(response=json.dumps({}), status=404, mimetype=JSON_MIME_TYPE)
 
