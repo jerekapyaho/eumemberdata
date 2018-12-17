@@ -1,12 +1,15 @@
 import os
 import json
+import io
 
-from flask import Flask, request, Response
+from flask import Flask, request, Response, send_file
 
 from memberdata import get_countries, get_country, get_cities, get_city, get_updated
+from certificate import get_certificate
 
 JSON_MIME_TYPE = 'application/json; charset=UTF-8'
-    
+PDF_MIME_TYPE = 'application/pdf'
+
 app = Flask(__name__)
 
 @app.route('/countries/')
@@ -48,6 +51,16 @@ def updated():
         # If there was no timestamp, return zero as a special case
         resp = Response(response=json.dumps({'updated': 0}), status=200, mimetype=JSON_MIME_TYPE)
     return resp
+
+@app.route('/certificate/<cert_id>')
+def certificate(cert_id):
+    if cert_id != None:
+        doc = get_certificate(cert_id)
+        return send_file(io.BytesIO(doc.read()),
+                     attachment_filename='{}.pdf'.format(cert_id),
+                     mimetype=PDF_MIME_TYPE)
+    else:
+        return Response(response=json.dumps({}), status=404, mimetype=JSON_MIME_TYPE)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
