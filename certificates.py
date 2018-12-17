@@ -27,4 +27,4 @@ def get_certificate(cert_id):
     finally:
         if conn is not None:
             conn.close()
-    return doc[2]  # return just the document
+    return doc  # return just the document
