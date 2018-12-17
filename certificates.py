@@ -13,13 +13,13 @@ def get_certificate(cert_id):
         # create a new cursor object
         cur = conn.cursor()
         # execute the SELECT statement
-        cur.execute(""" SELECT document
+        cur.execute(""" SELECT id, name, document
                         FROM certificate
                         WHERE id = %s """,
                     (cert_id,))
  
-        m = cur.fetchone()
-        doc = m.tobytes()  # turn a memory view into bytes
+        row = cur.fetchone()
+        doc = row[2].tobytes()  # turn a memory view into bytes
 
         # close the communication with the PostgresQL database
         cur.close()
