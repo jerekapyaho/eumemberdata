@@ -13,12 +13,13 @@ def get_certificate(cert_id):
         # create a new cursor object
         cur = conn.cursor()
         # execute the SELECT statement
-        cur.execute(""" SELECT id, name, document
+        cur.execute(""" SELECT document
                         FROM certificate
                         WHERE id = %s """,
                     (cert_id,))
  
-        doc = cur.fetchone()
+        doc = bytes(cur.fetchone())  # turn a memory view into bytes
+
         # close the communication with the PostgresQL database
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
