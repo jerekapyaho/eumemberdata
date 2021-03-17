@@ -69,19 +69,6 @@ CREATE TABLE IF NOT EXISTS currency_name(
 );
 
 /*
- * The years when a country has joined the union, the eurozone, or the Schengen treaty.
- * If the country is not a member of the eurozone or Schengen, the corresponding column value is NULL,
- * otherwise the value is the year in the Gregorian calendar. Obviously the year of joining the
- * union cannot be NULL, since there are only member countries in this data.
- */
-CREATE TABLE IF NOT EXISTS joined(
-    country_code TEXT NOT NULL,
-    union_year INTEGER NOT NULL,
-    eurozone_year INTEGER,
-    schengen_year INTEGER
-);
-
-/*
  * The dates when a country has joined the union, the eurozone, or the Schengen treaty.
  * If the country is not a member of the eurozone or Schengen, the corresponding column value is NULL,
  * otherwise the value is the date in the Gregorian calendar, expressed in the ISO 8601 standard format
@@ -92,7 +79,8 @@ CREATE TABLE IF NOT EXISTS membership(
     country_code TEXT NOT NULL REFERENCES country(country_code),
     union_date TEXT NOT NULL,
     euro_date TEXT,
-    schengen_date TEXT
+    schengen_date TEXT,
+    exit_date TEXT
 );
 
 /*

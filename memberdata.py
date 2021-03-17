@@ -53,7 +53,7 @@ def get_countries():
             country_names[cc] = names_for_language
             names_cursor.close()
 
-            joins_statement = 'SELECT country_code, union_date, euro_date, schengen_date FROM membership WHERE country_code = %s'
+            joins_statement = 'SELECT country_code, union_date, euro_date, schengen_date, exit_date FROM membership WHERE country_code = %s'
             joins_cursor = conn.cursor()
             joins_cursor.execute(joins_statement, (cc,))
             joins = joins_cursor.fetchall()
@@ -62,6 +62,7 @@ def get_countries():
                 joins_for_country['union'] = join[1]
                 joins_for_country['euro'] = join[2]
                 joins_for_country['schengen'] = join[3]
+                joins_for_country['exit'] = join[4]
             country_joins[cc] = joins_for_country
             joins_cursor.close()
 
