@@ -1,7 +1,7 @@
 import os
 import json
 
-from flask import Flask, request, Response, send_file, make_response
+from flask import Flask, request, Response
 
 from memberdata import get_countries, get_country, get_cities, get_city, get_updated
 
