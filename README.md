@@ -155,3 +155,13 @@ The database for the REST API was created with:
 
 Heroku saves the URL of the database into your app as the `HEROKU_DATABASE_BRONZE_URL`
 environment variable. The REST API app refers to this value.
+
+The database table create statements for SQLite should work as is for PostgreSQL. Use the `psql` command
+to create the tables.
+
+To populate the database after you have created the tables, you can import the CSV files using the psql
+\copy command, like so:
+
+    \copy city from 'city.csv' with csv header
+
+Execute a similar command for each CSV file city, country, membership, union_name.
