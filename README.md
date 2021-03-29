@@ -164,4 +164,4 @@ To populate the database after you have created the tables, you can import the C
 
     \copy city from 'city.csv' with csv header
 
-Execute a similar command for each CSV file city, country, membership, union_name.
+Execute a similar command for each CSV file city, country, membership, union_name, city_name, country_name.
