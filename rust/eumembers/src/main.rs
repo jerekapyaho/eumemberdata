@@ -98,7 +98,7 @@ fn main() -> Result<(), Error> {
     }
 
     let path = Path::new(&args[1]);
-    println!("Path = {:?}", path);
+    //println!("Path = {:?}", path);
 
     let mut events = Vec::<Event>::new();
 
@@ -112,8 +112,8 @@ fn main() -> Result<(), Error> {
         let schengen_date = &record[3];
         let exit_date = &record[4];
 
-        println!("country_code = {}, union_date = {}, euro_date = {}, schengen_date = {}, exit_date = {}",
-            country_code, union_date, euro_date, schengen_date, exit_date);
+        //println!("country_code = {}, union_date = {}, euro_date = {}, schengen_date = {}, exit_date = {}",
+        //    country_code, union_date, euro_date, schengen_date, exit_date);
 
         let joined_union_event = Event {
             country_code: country_code.to_string(),
@@ -166,7 +166,7 @@ fn main() -> Result<(), Error> {
         }
     }
 
-    println!("Country names: {:?}", country_names);
+    //println!("Country names: {:?}", country_names);
 
     let events_by_date = events.iter().grouping_by(|e| e.date.clone());
     let mut sorted_events: Vec<_> = events_by_date.iter().collect();
