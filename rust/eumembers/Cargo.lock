@@ -45,7 +45,14 @@ name = "eumembers"
 version = "0.1.0"
 dependencies = [
  "csv",
+ "grouping_by",
 ]
+
+[[package]]
+name = "grouping_by"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "67512357b0a02349c5474fea5c20076028e220ea62fde78a1b51b3dc13603246"
 
 [[package]]
 name = "itoa"

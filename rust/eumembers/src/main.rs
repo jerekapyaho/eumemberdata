@@ -3,8 +3,10 @@ use std::process;
 use std::path::Path;
 use csv::Error;
 use std::fmt;
+use std::collections::HashMap;
+use grouping_by::GroupingBy;
 
-#[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
+#[derive(Debug, Eq, Ord, PartialEq, PartialOrd, Copy, Clone, Hash)]
 enum EventType {
     JoinedUnion,
     JoinedEurozone,
@@ -100,8 +102,8 @@ fn main() -> Result<(), Error> {
 
     let mut events = Vec::<Event>::new();
 
-    let mut reader = csv::ReaderBuilder::new().has_headers(true).from_path(path.join("membership.csv")).expect("Cannot read CSV file");
-    for record in reader.records() {
+    let mut membership_reader = csv::ReaderBuilder::new().has_headers(true).from_path(path.join("membership.csv")).expect("Cannot read CSV file");
+    for record in membership_reader.records() {
         let record = record?;
 
         let country_code = &record[0];
@@ -146,15 +148,38 @@ fn main() -> Result<(), Error> {
             };
             events.push(exited_union_event);
         }
+    }
 
-    }    
+    let mut country_names = HashMap::<String, String>::new();
+    let mut country_name_reader = csv::ReaderBuilder::new().has_headers(true).from_path(path.join("country_name.csv")).expect("Cannot read CSV file");
 
-    // We can sort the events by date because the Event struct and its members 
-    // have the necessary traits to be sortable.
-    events.sort_by(|a, b| a.date.cmp(&b.date));
+    for record in country_name_reader.records() {
+        let record = record?;
 
-    for event in events {
-        println!("{} {} {}", event.country_code, event.date, event.event_type);
+        let country_code = &record[0];
+        let language_code = &record[1];
+        let name = &record[2];
+
+        // Pick the English language names (language code 'en'):
+        if language_code == "en" {
+            country_names.insert(country_code.to_string(), name.to_string());
+        }
+    }
+
+    println!("Country names: {:?}", country_names);
+
+    let events_by_date = events.iter().grouping_by(|e| e.date.clone());
+    let mut sorted_events: Vec<_> = events_by_date.iter().collect();
+    sorted_events.sort_by_key(|d| d.0);
+    for (date, events_of_date) in sorted_events.iter() {
+        let events_by_type = events_of_date.iter().grouping_by(|e| e.event_type);
+        for event_type in events_by_type.keys() {
+            let mut names: Vec<&str> = Vec::<&str>::new();
+            for date_event in events_of_date.iter() {
+                names.push(country_names.get(&date_event.country_code).unwrap());
+            }
+            println!("{}: {} {}.", date, make_list_string(names), event_type);
+        }
     }
 
     Ok(())
