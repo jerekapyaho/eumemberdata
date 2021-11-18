@@ -9,6 +9,18 @@ class EventKind(Enum):
     def list(cls):
         return list(map(lambda c: c.value, cls))
 
+    def __str__(self) -> str:
+        if self == EventKind.JOINED_UNION:
+            return 'joined the EU'
+        elif self == EventKind.JOINED_EUROZONE:
+            return 'joined the eurozone'
+        elif self == EventKind.JOINED_SCHENGEN:
+            return 'joined the Schengen treaty'
+        elif self == EventKind.EXITED_UNION:
+            return 'exited the EU'
+        else:
+            return '(unknown event)'
+
     JOINED_UNION = 1
     JOINED_EUROZONE = 2
     JOINED_SCHENGEN = 3
@@ -65,18 +77,7 @@ def make_timeline(events: Dict[str, List[Event]]) -> None:
 
         for event_kind in date_events:
             country_names = [e.country_name for e in date_events[event_kind]]
-
-            action_str = ''
-            if event.kind == EventKind.JOINED_UNION:
-                action_str = 'joined the EU'
-            elif event.kind == EventKind.JOINED_EUROZONE:
-                action_str = 'joined the eurozone'
-            elif event.kind == EventKind.JOINED_SCHENGEN:
-                action_str = 'joined the Schengen treaty'
-            elif event.kind == EventKind.EXITED_UNION:
-                action_str = 'exited the EU'
-
-            print(f'{event.date}: {concatenated(country_names)} {action_str}.')
+            print(f'{event.date}: {concatenated(country_names)} {event.kind}.')
 
 def concatenated(names: List[str]) -> str:
     if len(names) == 0:
