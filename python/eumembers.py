@@ -98,14 +98,7 @@ def concatenated(names: List[str]) -> str:
     ]
     return ''.join(parts)
 
-if __name__ == '__main__':
-    if len(sys.argv) < 2: #
-        print('Need at least the SQLite database file name.')
-        sys.exit(-1)
-
-    db_name = sys.argv[1]
-    #print(f'using database file "{db_name}"')
-
+def load_data(db_name):
     con = sqlite3.connect(db_name)
     cur = con.cursor()
 
@@ -119,6 +112,7 @@ if __name__ == '__main__':
     membership_rows = cur.fetchall()
 
     all_events = defaultdict(list)  # dict where keys are dates, and values are lists of events.
+    # For more on using defaultdict see https://realpython.com/python-defaultdict/
 
     for row in membership_rows:
         country: Optional[Country] = find_country(countries, row[0])
@@ -146,7 +140,16 @@ if __name__ == '__main__':
     cur.close()
     con.close()
 
-    make_timeline(all_events)
+    return all_events
 
-# For defaultdict use, see https://realpython.com/python-defaultdict/
-# For enumerating with index, see https://realpython.com/python-enumerate/
+if __name__ == '__main__':
+    if len(sys.argv) < 2: #
+        print('Need at least the SQLite database file name.')
+        sys.exit(-1)
+
+    db_name = sys.argv[1]
+    #print(f'using database file "{db_name}"')
+
+    all_events = load_data(db_name)
+
+    make_timeline(all_events)
