@@ -7,7 +7,7 @@ While every attempt has been made to ensure that the data is correct,
 there may be errors. Use these data at your own risk.
 
 Some of the data originates from the European Union website, mainly the
-[EU Member Countries](http://europa.eu/about-eu/countries/member-countries/index_en.htm) 
+[EU Member Countries](http://europa.eu/about-eu/countries/member-countries/index_en.htm)
 page.
 
 ## Data format
@@ -18,10 +18,10 @@ the files use a CR LF line delimiter. They also have a header row,
 used to indicate database column names for further use.
 
 The `country_code` column values are the ISO 3166-1 Alpha-2 codes of the countries,
-with the following exceptions due to common usage by the European Commission: 
+with the following exceptions due to common usage by the European Commission:
 Greece is represented with `EL`instead of `GR`, and the United Kingdom is
 represented with `GB` instead of `UK`.
- 
+
 The `language_code` column values are the ISO 639-1 Alpha-2 codes of the languages.
 
 The CSV data files are:
@@ -43,7 +43,7 @@ database, open a shell with Terminal and issue the command
 
 `sqlite3 eumemberdata.sqlite3`
 
-This starts up the SQLite console, where you can read and execute the 
+This starts up the SQLite console, where you can read and execute the
 database definition statements from `eumemberdata.sql`, like so:
 
 `.read eumemberdata.sql`
@@ -84,6 +84,29 @@ Enter ".help" for usage hints.
 sqlite> select country_code, exit_date from membership where exit_date != '';
 GB|2020-01-31
 ```
+
+## Generating ER diagram
+
+You can use [SchemaCrawler](https://www.schemacrawler.com/index.html) to generate
+an Entity-Relationship (ER) diagram from the database schema. (When designing a
+database, it is probably better to start with an ER diagram, and then proceed to
+define the schema based on that.)
+
+This [Bash script](https://gist.github.com/dannguyen/f056d05bb7fec408bb7c14ea1552c349#file-script-schemacrawler-on-macos-sh)
+can be used to install SchemaCrawler locally, so that you can invoke it simply with the
+command `schemacrawler` and the necessary options.
+
+The ER diagram of the database in PNG format can be created with the following command:
+
+```
+schemacrawler --server sqlite --database=eumemberdata.sqlite3 \
+    --info-level=standard --command=schema \
+    --outputformat=png --output-file=eumemberdata-schema.png
+```
+
+This is the result:
+
+![ER diagram of the database](./eumemberdata-schema.png)
 
 ## JSON output
 
