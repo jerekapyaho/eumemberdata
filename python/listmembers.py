@@ -29,7 +29,7 @@ def load_members(db_name):
     return members
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2: #
+    if len(sys.argv) < 2:
         print('Need at least the SQLite database file name.')
         sys.exit(-1)
 
