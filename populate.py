@@ -1,13 +1,12 @@
 import sqlite3
 import csv
-from collections import namedtuple
 
 db_filename = 'eumemberdata.sqlite3'
 
 def populate_table(conn, table_name):
     with open(csv_filename) as csv_file:
         csv_reader = csv.DictReader(csv_file)
-        
+
         columns = ', '.join([column for column in csv_reader.fieldnames])
         values = ', '.join([':%s' % column for column in csv_reader.fieldnames])
         statement = 'insert into %s (%s) values (%s)' % (table_name, columns, values)
@@ -24,6 +23,6 @@ for table_name in table_names:
     print('Processing %s' % csv_filename)
 
     conn = sqlite3.connect(db_filename)
-    populate_table(conn, table_name)    
+    populate_table(conn, table_name)
 
 print('Done.')
