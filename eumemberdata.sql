@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS city (
  * 'name' - the name of the city in the language indicated by 'language_code'
  */
 CREATE TABLE IF NOT EXISTS city_name (
-    city_id INTEGER NOT NULL REFERENCES city(city_id),
+    city_id TEXT NOT NULL REFERENCES city(city_id),
     language_code TEXT NOT NULL,
     name TEXT NOT NULL
 );
