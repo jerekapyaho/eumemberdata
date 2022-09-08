@@ -124,7 +124,24 @@ such as:
 SELECT country_code FROM country;
 ```
 
+### With SQL INSERT statements
+
+Ensure that the database and the tables have been created, for example
+using the `eumemberdata.sql` file in `sqlite3`.
+
+Read the file `populate.sql` into the `sqlite3` tool:
+
+`.read populate.sql`
+
 ## Example queries
+
+Here are some example queries to the database. You may want to adjust the
+display options of `sqlite3`:
+
+```
+.mode table
+.headers on
+```
 
 Find all the names of the current or historic EU member countries
 in a given language (indicated by its ISO 639-1 Alpha-2 code),
@@ -142,6 +159,9 @@ indicated by empty strings, not NULL values):
 ```
 SELECT country_code FROM membership WHERE exit_date = '';
 ```
+
+Note that the result set should not contain `GB`, because Great Britain
+has exited the European Union.
 
 Get the English language names of all the current member countries in English:
 
@@ -166,7 +186,7 @@ SELECT name FROM city_name
 WHERE language_code = 'en';
 ```
 
-Get the names of the countries and their capitals in English:
+Get the English names of the countries and their capitals:
 
 ```
 SELECT co_name, ci_name FROM
