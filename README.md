@@ -56,6 +56,8 @@ Enter the `.quit` command to return to the shell.
 
 ## Populating the database
 
+### Using a Python script
+
 Use the Python script `populate.py` to add rows to the database:
 
 `python3 populate.py`
@@ -85,7 +87,104 @@ sqlite> select country_code, exit_date from membership where exit_date != '';
 GB|2020-01-31
 ```
 
-## Generating ER diagram
+### Using the sqlite3 command-line tool
+
+The `sqlite3` command-line tool can import data from CSV files into database tables.
+However, it treats the files differently depending on whether the table already
+exists or not.
+
+We'd like to create all the database tables beforehand with our `eumemberdata.sql` SQL script, and import the data separately. Because the CSV files in this repository have a header row with the column names, we need to instruct `sqlite3` to skip the first row.
+
+Ensure that you have created the database and all the tables as detailed above,
+and that the database is empty. To prevent constraint violations, issue the SQL
+command:
+
+```
+PRAGMA foreign_keys=ON;
+```
+
+Then enter the following commands in the sqlite3 tool:
+
+```
+.import --csv --skip 1 city.csv city
+.import --csv --skip 1 city_name.csv city_name
+.import --csv --skip 1 country.csv country
+.import --csv --skip 1 country_name.csv country_name
+.import --csv --skip 1 union_name.csv union_name
+.import --csv --skip 1 membership.csv membership
+```
+
+The order is important here, because you can't create countries before their
+capital cities exist, and so on.
+
+Verify that the data has been imported into the database with a SELECT statement
+such as:
+
+```
+SELECT country_code FROM country;
+```
+
+## Example queries
+
+Find all the names of the current or historic EU member countries
+in a given language (indicated by its ISO 639-1 Alpha-2 code),
+in this case English:
+
+```
+SELECT country_name.country_code, name FROM country_name
+JOIN country ON country.country_code = country_name.country_code
+WHERE language_code = 'en';
+```
+
+Get all the current member countries (note that missing dates are currently
+indicated by empty strings, not NULL values):
+
+```
+SELECT country_code FROM membership WHERE exit_date = '';
+```
+
+Get the English language names of all the current member countries in English:
+
+```
+SELECT name FROM country_name
+JOIN (SELECT country_code FROM membership WHERE exit_date = '') AS current_member
+    ON country_name.country_code = current_member.country_code
+WHERE language_code = 'en';
+```
+
+Get the country codes and capital IDs of all the countries:
+
+```
+SELECT country_code, capital FROM country
+JOIN city ON country.capital = city.city_id;
+```
+
+Get the English language names of all the capital cities:
+
+```
+SELECT name FROM city_name
+WHERE language_code = 'en';
+```
+
+Get the names of the countries and their capitals in English:
+
+```
+SELECT co_name, ci_name FROM
+
+(SELECT country_name.country_code, name as co_name, capital FROM country_name
+JOIN country ON country.country_code = country_name.country_code
+WHERE language_code = 'en') AS all_countries
+
+JOIN
+
+(SELECT capital.city_id, capital.name AS ci_name FROM country
+  JOIN (SELECT city_id, name FROM city_name WHERE language_code = 'en') AS capital
+    ON country.capital = capital.city_id) AS all_capitals
+
+ON all_countries.capital = all_capitals.city_id;
+```
+
+## Generating an ER diagram
 
 You can use [SchemaCrawler](https://www.schemacrawler.com/index.html) to generate
 an Entity-Relationship (ER) diagram from the database schema. (When designing a
