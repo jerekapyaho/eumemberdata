@@ -32,25 +32,27 @@ The CSV data files are:
 * `membership.csv` -- country-specific dates for joining the union, the eurozone etc., also exit
 * `union_name.csv` -- the name of the EU in all official EU languages
 
-## Database creation
+## Creating the database
 
-You can use the `eumemberdata.sql` script to create an SQLite 3 database.
+You can use the `create.sql` script to create an SQLite 3 database.
 However, the script does not populate the database. For that you can use
 the `populate.py` Python script (see below).
 
-On macOS the `sqlite3` utility is already on your system. To create the
-database, open a shell with Terminal and issue the command
+On macOS the `sqlite3` utility is already on your system. To install
+SQLite on Windows, see the [instructions](https://www.sqlite.org/cli.html).
+
+To create the database, open a terminal window and issue the command
 
 `sqlite3 eumemberdata.sqlite3`
 
 This starts up the SQLite console, where you can read and execute the
-database definition statements from `eumemberdata.sql`, like so:
+database definition statements from the SQL file, like this:
 
-`.read eumemberdata.sql`
+`.read create.sql`
 
 After executing the SQL, you can issue the `.schema` command to check that
 the database tables have been created. You should see more or less the
-same as in `eumemberdata.sql` script (minus the comments).
+same as in the script (minus the comments).
 
 Enter the `.quit` command to return to the shell.
 
@@ -93,7 +95,7 @@ The `sqlite3` command-line tool can import data from CSV files into database tab
 However, it treats the files differently depending on whether the table already
 exists or not.
 
-We'd like to create all the database tables beforehand with our `eumemberdata.sql` SQL script, and import the data separately. Because the CSV files in this repository have a header row with the column names, we need to instruct `sqlite3` to skip the first row.
+We'd like to create all the database tables first with our creation SQL script, and import the data separately. Because the CSV files in this repository have a header row with the column names, we need to instruct `sqlite3` to skip the first row.
 
 Ensure that you have created the database and all the tables as detailed above,
 and that the database is empty. To prevent constraint violations, issue the SQL
@@ -127,7 +129,7 @@ SELECT country_code FROM country;
 ### With SQL INSERT statements
 
 Ensure that the database and the tables have been created, for example
-using the `eumemberdata.sql` file in `sqlite3`.
+using the `create.sql` file in `sqlite3` (see above).
 
 Read the file `populate.sql` into the `sqlite3` tool:
 
