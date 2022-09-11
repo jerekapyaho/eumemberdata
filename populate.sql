@@ -714,7 +714,7 @@ INSERT INTO country (country_code, capital, area, population, population_year, c
 INSERT INTO country (country_code, capital, area, population, population_year, currency_code, national_day) VALUES('ES', 'madrid', '505970', '47450795', '2020', 'EUR', '--10-12');
 INSERT INTO country (country_code, capital, area, population, population_year, currency_code, national_day) VALUES('FI', 'helsinki', '338435', '5553000', '2022', 'EUR', '--12-06');
 INSERT INTO country (country_code, capital, area, population, population_year, currency_code, national_day) VALUES('FR', 'paris', '632833', '67897000', '2022', 'EUR', '--07-14');
-INSERT INTO country (country_code, capital, area, population, population_year, currency_code, national_day) VALUES('GB', 'london', '248528', '60800000', '2011', 'EUR', '');
+INSERT INTO country (country_code, capital, area, population, population_year, currency_code, national_day) VALUES('GB', 'london', '248528', '60800000', '2011', 'GBP', '');
 INSERT INTO country (country_code, capital, area, population, population_year, currency_code, national_day) VALUES('HR', 'zagreb', '56594', '3888529', '2021', 'HRK', '--10-08');
 INSERT INTO country (country_code, capital, area, population, population_year, currency_code, national_day) VALUES('HU', 'budapest', '93024', '9749763', '2020', 'HUF', '--08-20');
 INSERT INTO country (country_code, capital, area, population, population_year, currency_code, national_day) VALUES('IE', 'dublin', '69797', '5123536', '2022', 'EUR', '--04-24');
