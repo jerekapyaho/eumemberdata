@@ -277,7 +277,7 @@ all the information in the database.
 
 The data is also available as a REST API at https://eumemberdata.herokuapp.com.
 
-# Deploying to Heroku
+## Deploying to Heroku
 
 Create a Heroku app as described in the Heroku Dev Center notes for Python at https://devcenter.heroku.com/categories/python-support.
 
@@ -289,7 +289,7 @@ Prepare for deployment by creating a `Procfile`, installing the required librari
 into your Python virtual environment, and collecting the
 libraries into `requirements.txt` with `pip`.
 
-# Preparing the PostgreSQL database
+## Preparing the PostgreSQL database
 
 The SQLite database is intended for mobile apps. In Heroku web apps SQLite is not an option for the database, since it requires a persistent database file. Instead, you can use the Heroku PostgreSQL add-on.
 
@@ -309,3 +309,37 @@ To populate the database after you have created the tables, you can import the C
     \copy city from 'city.csv' with csv header
 
 Execute a similar command for each CSV file city, country, membership, union_name, city_name, country_name.
+
+## Timeline of EU events
+
+This repository contains several implementations of a timeline of EU events, written in
+Python, Kotlin, Swift and Rust.
+
+An example of the timeline:
+
+```
+1958-01-01: Belgium, France, Germany, Italy and Netherlands joined the EU.
+1973-01-01: Denmark, Ireland and United Kingdom joined the EU.
+1981-01-01: Greece joined the EU.
+1986-01-01: Portugal and Spain joined the EU.
+1995-01-01: Austria, Finland and Sweden joined the EU.
+1995-03-26: Belgium, France, Germany, Luxembourg, Netherlands, Portugal and Spain joined the Schengen agreement.
+1997-10-26: Italy joined the Schengen agreement.
+1999-01-01: Austria, Belgium, Finland, France, Germany, Ireland, Italy, Luxembourg, Netherlands, Portugal and Spain joined the Eurozone.
+2000-01-01: Greece joined the Schengen agreement.
+2001-01-01: Greece joined the Eurozone.
+2001-03-25: Denmark, Finland and Sweden joined the Schengen agreement.
+2004-01-01: Estonia and Hungary joined the EU.
+2004-05-01: Cyprus, Czech Republic, Latvia, Lithuania, Luxembourg, Malta, Poland, Slovakia and Slovenia joined the EU.
+2007-01-01: Slovenia joined the Eurozone. Bulgaria and Romania joined the EU.
+2007-12-01: Austria, Czech Republic, Estonia, Hungary, Latvia, Lithuania, Malta, Poland, Slovakia and Slovenia joined the Schengen agreement.
+2008-01-01: Cyprus and Malta joined the Eurozone.
+2009-01-01: Slovakia joined the Eurozone.
+2011-01-01: Estonia joined the Eurozone.
+2013-07-01: Croatia joined the EU.
+2014-01-01: Latvia joined the Eurozone.
+2015-01-01: Lithuania joined the Eurozone.
+2020-01-31: United Kingdom exited the EU.
+```
+
+*Challenge:* Can you implement this timeline in SQL?

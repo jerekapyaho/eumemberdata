@@ -8,7 +8,7 @@ struct Coordinate {
 class City {
     var name: String
     var location: Coordinate
-    
+
     init(name: String, location: Coordinate) {
         self.name = name
         self.location = location
@@ -29,7 +29,7 @@ struct Event: CustomStringConvertible {
 
     var description: String {
         return "\(country.name) \(eventType) \(date)"
-    }    
+    }
 }
 
 protocol Member {
@@ -47,22 +47,24 @@ class Country: Member, CustomStringConvertible {
     var area: Int = 0
     var population: Int = 0
 
-    init(code: String, name: String, capital: City?, area: Int, population: Int, joined: String) {
+    init(code: String, name: String, capital: City?, area: Int, population: Int,
+        joined: String, exited: String? = nil) {
         self.code = code
         self.name = name
         self.capital = capital
         self.area = area
         self.population = population
         self.joinedUnionDate = joined
+        self.exitedUnionDate = exited
     }
-    
+
     var populationDensity: Int {
         guard area != 0 && population != 0 else {
             return 0
         }
         return population / area
     }
-    
+
     var description: String {
         return self.name
     }
@@ -74,14 +76,14 @@ class Country: Member, CustomStringConvertible {
     var joinedEurozoneDate: String? = nil
     var joinedSchengenDate: String? = nil
     var exitedUnionDate: String? = nil
-    
+
     func isFounder() -> Bool {
         return self.joinedUnionDate == "1958-01-01"
     }
 }
 
 let officialLanguages = [
-    "bg", "cs", "da", "de", "el", "en", "es", "et", "fi", "fr", "ga", "hr", "hu", 
+    "bg", "cs", "da", "de", "el", "en", "es", "et", "fi", "fr", "ga", "hr", "hu",
     "it", "lt", "lv", "mt", "nl", "pl", "pt", "ro", "sk", "sl", "sv"
 ]
 
@@ -112,7 +114,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Amsterdam",
         "sv": "Amsterdam"
     ],
-    
+
     "brussels": [
         "bg": "Брюксел",
         "cs": "Brusel",
@@ -139,7 +141,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Bruselj",
         "sv": "Bryssel"
     ],
-    
+
     "vienna": [
         "bg": "Виена",
         "cs": "Vídeň",
@@ -166,7 +168,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Dunaj",
         "sv": "Wien"
     ],
-    
+
 
     "zagreb": [
         "bg": "Загреб",
@@ -194,7 +196,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Zagreb",
         "sv": "Zagreb"
     ],
-    
+
     "nicosia": [
         "bg": "Никозия",
         "cs": "Nikósie",
@@ -221,7 +223,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Nikozija",
         "sv": "Nicosia"
     ],
-    
+
     "prague": [
         "bg": "Прага",
         "cs": "Praha",
@@ -248,7 +250,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Praga",
         "sv": "Prag"
     ],
-    
+
     "copenhagen": [
         "bg": "Копенхаген",
         "cs": "Kodaň",
@@ -275,7 +277,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "København",
         "sv": "Köpenhamn"
     ],
-    
+
     "tallinn": [
         "bg": "Талин",
         "cs": "Tallinn",
@@ -302,7 +304,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Talin",
         "sv": "Tallinn"
     ],
-    
+
     "helsinki": [
         "bg": "Хелзинки",
         "cs": "Helsinky",
@@ -329,7 +331,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Helsinki",
         "sv": "Helsingfors"
     ],
-    
+
     "paris": [
         "bg": "Париж",
         "cs": "Paříž",
@@ -356,7 +358,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Pariz",
         "sv": "Paris"
     ],
-    
+
     "berlin": [
         "bg": "Берлин",
         "cs": "Berlin",
@@ -383,7 +385,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Berlin",
         "sv": "Berlin"
     ],
-    
+
     "athens": [
         "bg": "Атина",
         "cs": "Atény",
@@ -410,7 +412,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Atene",
         "sv": "Aten"
     ],
-    
+
     "budapest": [
         "bg": "Будапеща",
         "cs": "Budapešť",
@@ -437,7 +439,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Budimpešta",
         "sv": "Budapest"
     ],
-    
+
     "dublin": [
         "bg": "Дъблин",
         "cs": "Dublin",
@@ -464,7 +466,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Dublin",
         "sv": "Dublin"
     ],
-    
+
     "rome": [
         "bg": "Рим",
         "cs": "Řím",
@@ -491,7 +493,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Rim",
         "sv": "Rom"
     ],
-    
+
     "riga": [
         "bg": "Рига",
         "cs": "Riga",
@@ -518,7 +520,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Riga",
         "sv": "Riga"
     ],
-    
+
     "vilnius": [
         "bg": "Вилнюс",
         "cs": "Vilnius",
@@ -545,7 +547,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Vilna",
         "sv": "Vilnius"
     ],
-    
+
     "valletta": [
         "bg": "Валета",
         "cs": "Valetta",
@@ -572,7 +574,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Valletta",
         "sv": "Valletta"
     ],
-    
+
     "warsaw": [
         "bg": "Варшава",
         "cs": "Varšava",
@@ -599,7 +601,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Varšava",
         "sv": "Warszawa"
     ],
-    
+
     "lisbon": [
         "bg": "Лисабон",
         "cs": "Lisabon",
@@ -626,7 +628,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Lizbona",
         "sv": "Lissabon"
     ],
-    
+
     "ljubljana": [
         "bg": "Любляна",
         "cs": "Lublaň",
@@ -680,7 +682,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Luxembourg",
         "sv": "Luxemburg"
     ],
-        
+
     "bucharest": [
         "bg": "Букурещ",
         "cs": "Bukurešť",
@@ -707,7 +709,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Bukarešta",
         "sv": "Bukarest"
     ],
-    
+
     "bratislava": [
         "bg": "Братислава",
         "cs": "Bratislava",
@@ -734,7 +736,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Bratislava",
         "sv": "Bratislava"
     ],
-    
+
     "madrid": [
         "bg": "Мадрид",
         "cs": "Madrid",
@@ -761,7 +763,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Madrid",
         "sv": "Madrid"
     ],
-    
+
     "stockholm": [
         "bg": "Стокхолм",
         "cs": "Stockholm",
@@ -788,7 +790,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "Stockholm",
         "sv": "Stockholm"
     ],
-    
+
     "london": [
         "bg": "Лондон",
         "cs": "Londýn",
@@ -815,7 +817,7 @@ let cityNames: [String: [String: String]] = [
         "sl": "London",
         "sv": "London"
     ],
-    
+
     "sofia": [
         "bg": "София",
         "cs": "Sofie",
@@ -871,7 +873,7 @@ let countryNames = [
         "sl": "Avstrija",
         "sv": "Österrike"
     ],
-    
+
     "BE": [
         "bg": "Белгия",
         "cs": "Belgie",
@@ -898,7 +900,7 @@ let countryNames = [
         "sl": "Belgija",
         "sv": "Belgien"
     ],
-    
+
     "BG": [
         "bg": "България",
         "cs": "Bulharsko",
@@ -925,7 +927,7 @@ let countryNames = [
         "sl": "Bolgarija",
         "sv": "Bulgarien"
     ],
-    
+
     "CY": [
         "bg": "Кипър",
         "cs": "Kypr",
@@ -952,7 +954,7 @@ let countryNames = [
         "sl": "Ciper",
         "sv": "Cypern"
     ],
-    
+
     "CZ": [
         "bg": "Чешка република",
         "cs": "Česká republika",
@@ -979,7 +981,7 @@ let countryNames = [
         "sl": "Češka",
         "sv": "Tjeckien"
     ],
-    
+
     "DE": [
         "bg": "Германия",
         "cs": "Německo",
@@ -1006,7 +1008,7 @@ let countryNames = [
         "sl": "Nemčija",
         "sv": "Tyskland"
     ],
-    
+
     "DK": [
         "bg": "Дания",
         "cs": "Dánsko",
@@ -1033,7 +1035,7 @@ let countryNames = [
         "sl": "Danska",
         "sv": "Danmark"
     ],
-    
+
     "EE": [
         "bg": "Естония",
         "cs": "Estonsko",
@@ -1060,7 +1062,7 @@ let countryNames = [
         "sl": "Estonija",
         "sv": "Estland"
     ],
-    
+
     "EL": [
         "bg": "Гърция",
         "cs": "Řecko",
@@ -1087,7 +1089,7 @@ let countryNames = [
         "sl": "Grčija",
         "sv": "Grekland"
     ],
-    
+
     "ES": [
         "bg": "Испания",
         "cs": "Španělsko",
@@ -1114,7 +1116,7 @@ let countryNames = [
         "sl": "Španija",
         "sv": "Spanien"
     ],
-    
+
     "FI": [
         "bg": "Финландия",
         "cs": "Finsko",
@@ -1141,7 +1143,7 @@ let countryNames = [
         "sl": "Finska",
         "sv": "Finland"
     ],
-    
+
     "FR": [
         "bg": "Франция",
         "cs": "Francie",
@@ -1168,7 +1170,7 @@ let countryNames = [
         "sl": "Francija",
         "sv": "Frankrike"
     ],
-    
+
     "GB": [
         "bg": "Обединено кралство",
         "cs": "Spojené království",
@@ -1195,7 +1197,7 @@ let countryNames = [
         "sl": "Združeno kraljestvo",
         "sv": "Storbritannien"
     ],
-    
+
     "HR": [
         "bg": "Хърватия",
         "cs": "Chorvatsko",
@@ -1222,7 +1224,7 @@ let countryNames = [
         "sl": "Hrvaška",
         "sv": "Kroatien"
     ],
-    
+
     "HU": [
         "bg": "Унгария",
         "cs": "Maďarsko",
@@ -1249,7 +1251,7 @@ let countryNames = [
         "sl": "Madžarska",
         "sv": "Ungern"
     ],
-    
+
     "IE": [
         "bg": "Ирландия",
         "cs": "Irsko",
@@ -1276,7 +1278,7 @@ let countryNames = [
         "sl": "Irska",
         "sv": "Irland"
     ],
-    
+
     "IT": [
         "bg": "Италия",
         "cs": "Itálie",
@@ -1303,7 +1305,7 @@ let countryNames = [
         "sl": "Italija",
         "sv": "Italien"
     ],
-    
+
     "LT": [
         "bg": "Литва",
         "cs": "Litva",
@@ -1330,7 +1332,7 @@ let countryNames = [
         "sl": "Litva",
         "sv": "Litauen"
     ],
-    
+
     "LU": [
         "bg": "Люксембург",
         "cs": "Lucembursko",
@@ -1357,7 +1359,7 @@ let countryNames = [
         "sl": "Luksemburg",
         "sv": "Luxemburg"
     ],
-    
+
     "LV": [
         "bg": "Латвия",
         "cs": "Lotyšsko",
@@ -1384,7 +1386,7 @@ let countryNames = [
         "sl": "Latvija",
         "sv": "Lettland"
     ],
-    
+
     "MT": [
         "bg": "Малта",
         "cs": "Malta",
@@ -1411,7 +1413,7 @@ let countryNames = [
         "sl": "Malta",
         "sv": "Malta"
     ],
-    
+
     "NL": [
         "bg": "Нидерландия",
         "cs": "Nizozemsko",
@@ -1438,7 +1440,7 @@ let countryNames = [
         "sl": "Nizozemska",
         "sv": "Nederländerna"
     ],
-    
+
     "PL": [
         "bg": "Полша",
         "cs": "Polsko",
@@ -1465,7 +1467,7 @@ let countryNames = [
         "sl": "Poljska",
         "sv": "Polen"
     ],
-    
+
     "PT": [
         "bg": "Португалия",
         "cs": "Portugalsko",
@@ -1492,7 +1494,7 @@ let countryNames = [
         "sl": "Portugalska",
         "sv": "Portugal"
     ],
-    
+
     "RO": [
         "bg": "Румъния",
         "cs": "Rumunsko",
@@ -1519,7 +1521,7 @@ let countryNames = [
         "sl": "Romunija",
         "sv": "Rumänien"
     ],
-    
+
     "SE": [
         "bg": "Швеция",
         "cs": "Švédsko",
@@ -1546,7 +1548,7 @@ let countryNames = [
         "sl": "Švedska",
         "sv": "Sverige"
     ],
-    
+
     "SK": [
         "bg": "Словакия",
         "cs": "Slovinsko",
@@ -1573,7 +1575,7 @@ let countryNames = [
         "sl": "Slovaška",
         "sv": "Slovakien"
     ],
-    
+
     "SI": [
         "bg": "Словения",
         "cs": "Slovensko",
@@ -1613,16 +1615,16 @@ func backwards(_ s1: String, _ s2: String) -> Bool {
 }
 
 func sortCityNames() {
-    let cityNames = ["Vienna", "Brussels", "Zagreb", "Nicosia", "Prague", 
-                     "Copenhagen", "Tallinn", "Helsinki", "Paris", "Berlin", 
-                     "Athens", "Budapest", "Dublin", "Rome", "Riga", 
-                     "Vilnius", "Luxembourg", "Valletta", "Amsterdam", "Warsaw", 
-                     "Lisbon", "Bucharest", "Bratislava", "Ljubljana", "Madrid", 
+    let cityNames = ["Vienna", "Brussels", "Zagreb", "Nicosia", "Prague",
+                     "Copenhagen", "Tallinn", "Helsinki", "Paris", "Berlin",
+                     "Athens", "Budapest", "Dublin", "Rome", "Riga",
+                     "Vilnius", "Luxembourg", "Valletta", "Amsterdam", "Warsaw",
+                     "Lisbon", "Bucharest", "Bratislava", "Ljubljana", "Madrid",
                      "Stockholm", "London"]
     let sortedNames = cityNames.sorted()
     print(sortedNames)
 
-    var rev = cityNames.sorted(by: backwards) 
+    var rev = cityNames.sorted(by: backwards)
     print("Passing a function: \(rev)")
 
     //rev = cityNames.sorted(by: { s1, s2 in return s1 > s2 })
@@ -1693,10 +1695,10 @@ func greeting2(name: String? = nil) -> String {
 func printCityNames() {
     var nameCount = 0
     let cities = [
-        "amsterdam", "athens", "berlin", "bratislava", "brussels", "bucharest", 
-        "budapest",  "copenhagen", "dublin", "helsinki", "lisbon", "ljubljana", 
-        "london", "luxembourg", "madrid", "nicosia", "paris", "prague", "riga", 
-        "rome", "sofia", "stockholm", "tallinn", "valletta", "vienna", "vilnius", 
+        "amsterdam", "athens", "berlin", "bratislava", "brussels", "bucharest",
+        "budapest",  "copenhagen", "dublin", "helsinki", "lisbon", "ljubljana",
+        "london", "luxembourg", "madrid", "nicosia", "paris", "prague", "riga",
+        "rome", "sofia", "stockholm", "tallinn", "valletta", "vienna", "vilnius",
         "warsaw", "zagreb"
     ]
     for city in cities {
@@ -1717,7 +1719,7 @@ func printCityNames() {
 func printCountryNames() {
     var nameCount = 0
     let countries = [
-        "AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "EL", "ES", "FI", "FR", "GB", "HR", 
+        "AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "EL", "ES", "FI", "FR", "GB", "HR",
         "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO", "SE", "SK", "SI"
     ]
     for country in countries {
@@ -1982,7 +1984,8 @@ func initData() -> [Country] {
             location: Coordinate(latitude: 51.5072, longitude: -0.1275)),
         area: 248528,
         population: 64308261,
-        joined: "1973-01-01")
+        joined: "1973-01-01",
+        exited: "2020-01-31")
 
     let croatia = Country(
         code: "HR",
@@ -2014,7 +2017,7 @@ func initData() -> [Country] {
         population: 46507760,
         joined: "1986-01-01")
 
-    let countries = [finland, sweden, czechRepublic, belgium, austria, 
+    let countries = [finland, sweden, czechRepublic, belgium, austria,
             netherlands, bulgaria, greece, cyprus, denmark,
             estonia, france, germany, hungary, ireland,
             latvia, lithuania, luxembourg, malta, poland,
