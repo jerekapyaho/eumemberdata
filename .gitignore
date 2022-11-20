@@ -5,8 +5,6 @@ venv/
 __pycache__/
 *.py[cod]
 
-*.sqlite3
-
 # Java / Kotlin
 *.jar
 
@@ -16,3 +14,9 @@ __pycache__/
 *.pdf
 
 derby.log
+
+# SQLite
+*.sqlite3
+
+# PostgreSQL
+*.dump
