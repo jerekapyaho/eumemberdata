@@ -47,7 +47,7 @@ public sealed class CountryManager
 
         // Modeled after the example found at
         // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-tuples
-        var dates = new Dictionary<string, (string Joined, string? Euro, string? Schengen, string? Exited)>()
+        var allDates = new Dictionary<string, (string Joined, string? Euro, string? Schengen, string? Exited)>()
         {
             ["AT"] = ("1995-01-01", "1999-01-01", "2007-12-01", null),
             ["BE"] = ("1958-01-01", "1999-01-01", "1995-03-26", null),
@@ -78,6 +78,27 @@ public sealed class CountryManager
             ["SE"] = ("1995-01-01", null, "2001-03-25", null), 	
             ["GB"] = ("1973-01-01", null, null, "2020-01-31"),
         };
+
+        // Tuple items are accessed with Item1, Item2 etc.
+
+        foreach (var countryCode in allDates.Keys)
+        {
+            var country = this.GetCountryByCode(countryCode)!;
+            var dates = allDates[countryCode];
+            country.Joined = DateOnly.Parse(dates.Item1);
+            if (dates.Item2 != null)
+            {
+                country.Euro = DateOnly.Parse(dates.Item2!);
+            }
+            if (dates.Item3 != null)
+            {
+                country.Schengen = DateOnly.Parse(dates.Item3)!;
+            }
+            if (dates.Item4 != null)
+            {
+                country.Exited = DateOnly.Parse(dates.Item4)!;
+            }
+        }
     }
 
     public static CountryManager Instance
