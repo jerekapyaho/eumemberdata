@@ -5,6 +5,7 @@ namespace EUMembers;
 
 public sealed class CountryManager
 {
+    // The singleton instance is private.
     private static readonly CountryManager instance = new CountryManager();
 
     // Explicit static constructor to tell the C# compiler
@@ -12,8 +13,10 @@ public sealed class CountryManager
     // See https://csharpindepth.com/articles/singleton
     static CountryManager() { }
 
+    // The constructor is privat to prevent instantiation.
     private CountryManager()
     {
+        // Initialize the basic country data.
         _countries = new List<Country> {
             new Country("AT", "Austria", 83_879, 9_027_999),
             new Country("BE", "Belgium", 30_528, 11_584_008),
@@ -45,6 +48,7 @@ public sealed class CountryManager
             new Country("SI", "Slovenia", 20_273, 2_108_708)
         };
 
+        // Important EU dates for the countries.
         // Modeled after the example found at
         // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-tuples
         var allDates = new Dictionary<string, (string Joined, string? Euro, string? Schengen, string? Exited)>()
@@ -81,6 +85,7 @@ public sealed class CountryManager
 
         // Tuple items are accessed with Item1, Item2 etc.
 
+        // Set the date properties of the countries:
         foreach (var countryCode in allDates.Keys)
         {
             var country = this.GetCountryByCode(countryCode)!;
@@ -101,23 +106,16 @@ public sealed class CountryManager
         }
     }
 
-    public static CountryManager Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
+    // The singleton instance is a public read-only property.
+    public static CountryManager Instance => instance;
 
+    // The country list is kept in a private List<Country> instance.
+    // It is exposed to clients through a read-only list, so nobody
+    // outside this class can change it.
     private List<Country> _countries;
-    public List<Country> Countries
-    {
-        get
-        {
-            return _countries;
-        }
-    }
+    public IReadOnlyList<Country> Countries => _countries;
 
+    // Looks up a country based on its standard country code.
     public Country? GetCountryByCode(string code)
     {
         if (code.Length != 2 || code != code.ToUpper())
