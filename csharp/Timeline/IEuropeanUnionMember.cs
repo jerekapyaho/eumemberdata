@@ -17,10 +17,3 @@ public interface IEuropeanUnionMember
     public DateOnly? Schengen { get; set; }
     public DateOnly? Exited { get; set; }
 }
-
-public enum MemberDateKind {
-    Joined,
-    Euro,
-    Schengen,
-    Exited
-}
