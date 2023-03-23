@@ -13,7 +13,7 @@ public sealed class CountryManager
     // See https://csharpindepth.com/articles/singleton
     static CountryManager() { }
 
-    // The constructor is privat to prevent instantiation.
+    // The constructor is private to prevent instantiation.
     private CountryManager()
     {
         // Initialize the basic country data.
@@ -48,61 +48,56 @@ public sealed class CountryManager
             new Country("SI", "Slovenia", 20_273, 2_108_708)
         };
 
-        // Important EU dates for the countries.
+        // Important EU dates for the countries. The date strings will be
+        // parsed into DateOnly object instances.
         // Modeled after the example found at
         // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-tuples
-        var allDates = new Dictionary<string, (string Joined, string? Euro, string? Schengen, string? Exited)>()
+        var allDates = new Dictionary<string, (string, string, string, string)>()
         {
-            ["AT"] = ("1995-01-01", "1999-01-01", "2007-12-01", null),
-            ["BE"] = ("1958-01-01", "1999-01-01", "1995-03-26", null),
-            ["BG"] = ("2007-01-01", null, null, null),
-            ["HR"] = ("2013-07-01", "2023-01-01", "2023-01-01", null),
-            ["CY"] = ("2004-05-01", "2008-01-01", null, null),
-            ["CZ"] = ("2004-05-01", null, "2007-12-21", null),
-            ["DK"] = ("1973-01-01", null, "2001-03-25", null),
-            ["EE"] = ("2004-01-01", "2011-01-01", "2007-12-21", null),
-            ["FI"] = ("1995-01-01", "1999-01-01", "2001-03-25", null),
-            ["FR"] = ("1958-01-01", "1999-01-01", "1995-03-26", null),
-            ["DE"] = ("1958-01-01", "1999-01-01", "1995-03-26", null),
-            ["EL"] = ("1981-01-01", "2001-01-01", "2000-01-01", null),
-            ["HU"] = ("2004-01-01", null, "2007-12-21", null),
-            ["IE"] = ("1973-01-01", "1999-01-01", null, null),
-            ["IT"] = ("1958-01-01", "1999-01-01", "1997-10-26", null), 	
-            ["LV"] = ("2004-05-01", "2014-01-01", "2007-12-21", null), 	
-            ["LT"] = ("2004-05-01", "2015-01-01", "2007-12-21", null), 	
-            ["LU"] = ("1958-01-01", "1999-01-01", "1995-03-26", null), 	
-            ["MT"] = ("2004-05-01", "2008-01-01", "2007-12-21", null), 	
-            ["NL"] = ("1958-01-01", "1999-01-01", "1995-03-26", null), 	
-            ["PL"] = ("2004-05-01", null, "2007-12-21", null), 	
-            ["PT"] = ("1986-01-01", "1999-01-01", "1995-03-26", null), 	
-            ["RO"] = ("2007-01-01", null, null, null), 			
-            ["SK"] = ("2004-05-01", "2009-01-01", "2007-12-21", null), 	
-            ["SI"] = ("2004-05-01", "2007-01-01", "2007-12-21", null), 	
-            ["ES"] = ("1986-01-01", "1999-01-01", "1995-03-26", null), 	
-            ["SE"] = ("1995-01-01", null, "2001-03-25", null), 	
-            ["GB"] = ("1973-01-01", null, null, "2020-01-31"),
+            ["AT"] = ("1995-01-01", "1999-01-01", "2007-12-01", string.Empty),
+            ["BE"] = ("1958-01-01", "1999-01-01", "1995-03-26", string.Empty),
+            ["BG"] = ("2007-01-01", string.Empty, string.Empty, string.Empty),
+            ["HR"] = ("2013-07-01", "2023-01-01", "2023-01-01", string.Empty),
+            ["CY"] = ("2004-05-01", "2008-01-01", string.Empty, string.Empty),
+            ["CZ"] = ("2004-05-01", string.Empty, "2007-12-21", string.Empty),
+            ["DK"] = ("1973-01-01", string.Empty, "2001-03-25", string.Empty),
+            ["EE"] = ("2004-01-01", "2011-01-01", "2007-12-21", string.Empty),
+            ["FI"] = ("1995-01-01", "1999-01-01", "2001-03-25", string.Empty),
+            ["FR"] = ("1958-01-01", "1999-01-01", "1995-03-26", string.Empty),
+            ["DE"] = ("1958-01-01", "1999-01-01", "1995-03-26", string.Empty),
+            ["EL"] = ("1981-01-01", "2001-01-01", "2000-01-01", string.Empty),
+            ["HU"] = ("2004-01-01", string.Empty, "2007-12-21", string.Empty),
+            ["IE"] = ("1973-01-01", "1999-01-01", string.Empty, string.Empty),
+            ["IT"] = ("1958-01-01", "1999-01-01", "1997-10-26", string.Empty), 	
+            ["LV"] = ("2004-05-01", "2014-01-01", "2007-12-21", string.Empty), 	
+            ["LT"] = ("2004-05-01", "2015-01-01", "2007-12-21", string.Empty), 	
+            ["LU"] = ("1958-01-01", "1999-01-01", "1995-03-26", string.Empty), 	
+            ["MT"] = ("2004-05-01", "2008-01-01", "2007-12-21", string.Empty), 	
+            ["NL"] = ("1958-01-01", "1999-01-01", "1995-03-26", string.Empty), 	
+            ["PL"] = ("2004-05-01", string.Empty, "2007-12-21", string.Empty), 	
+            ["PT"] = ("1986-01-01", "1999-01-01", "1995-03-26", string.Empty), 	
+            ["RO"] = ("2007-01-01", string.Empty, string.Empty, string.Empty), 			
+            ["SK"] = ("2004-05-01", "2009-01-01", "2007-12-21", string.Empty), 	
+            ["SI"] = ("2004-05-01", "2007-01-01", "2007-12-21", string.Empty), 	
+            ["ES"] = ("1986-01-01", "1999-01-01", "1995-03-26", string.Empty), 	
+            ["SE"] = ("1995-01-01", string.Empty, "2001-03-25", string.Empty), 	
+            ["GB"] = ("1973-01-01", string.Empty, string.Empty, "2020-01-31"),
         };
 
         // Tuple items are accessed with Item1, Item2 etc.
 
-        // Set the date properties of the countries:
+        // Set the date properties of the countries.
+        // If the date string is not empty, we parse it into a LocalDate.
+        // Empty strings result in null values for the date.
+        // Careful: parsing will fail if the string is not in the right format.
         foreach (var countryCode in allDates.Keys)
         {
             var country = this.GetCountryByCode(countryCode)!;
             var dates = allDates[countryCode];
-            country.Joined = DateOnly.Parse(dates.Item1);
-            if (dates.Item2 != null)
-            {
-                country.Euro = DateOnly.Parse(dates.Item2!);
-            }
-            if (dates.Item3 != null)
-            {
-                country.Schengen = DateOnly.Parse(dates.Item3)!;
-            }
-            if (dates.Item4 != null)
-            {
-                country.Exited = DateOnly.Parse(dates.Item4)!;
-            }
+            country.Joined = DateOnly.Parse(dates.Item1); // only this date is never null
+            country.Euro = string.IsNullOrEmpty(dates.Item2) ? null : DateOnly.Parse(dates.Item2);  
+            country.Schengen = string.IsNullOrEmpty(dates.Item3) ? null : DateOnly.Parse(dates.Item3);
+            country.Exited = string.IsNullOrEmpty(dates.Item4) ? null : DateOnly.Parse(dates.Item4); 
         }
     }
 
