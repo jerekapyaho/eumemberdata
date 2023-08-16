@@ -1,5 +1,21 @@
 import csv
 
+def is_integer(n):
+    try:
+        float(n)
+    except ValueError:
+        return False
+    else:
+        return float(n).is_integer()
+
+def is_float(n):
+    try:
+        float(n)
+    except ValueError:
+        return False
+    else:
+        return True
+
 table_names = ['city', 'city_name', 'country', 'country_name', 'union_name', 'membership']
 
 print('PRAGMA foreign_keys=ON;')
@@ -22,13 +38,13 @@ for table_name in table_names:
             else:
                 final_row = []
                 for column in row:
-                    if isinstance(column, str):
+                    if is_integer(column) or is_float(column):
+                        final_row.append(str(column))
+                    else:
                         if column != '':
                             final_row.append(f"'{column}'")
                         else:
                             final_row.append('NULL')
-                    else:
-                        final_row.append(column)
                 values = ', '.join(final_row)
                 statement = (f'INSERT INTO {table_name} ({column_names}) VALUES({values});')
                 print(statement)
