@@ -23,7 +23,10 @@ for table_name in table_names:
                 final_row = []
                 for column in row:
                     if isinstance(column, str):
-                        final_row.append(f"'{column}'")
+                        if column != '':
+                            final_row.append(f"'{column}'")
+                        else:
+                            final_row.append('NULL')
                     else:
                         final_row.append(column)
                 values = ', '.join(final_row)
