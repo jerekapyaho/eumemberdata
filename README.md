@@ -28,18 +28,6 @@ The CSV data files are:
 * `membership.csv` -- country-specific dates for joining the union, the eurozone etc., also exit
 * `union_name.csv` -- the name of the EU in all official EU languages
 
-Missing column values are expressed as the literal string `NULL`, so if you import
-a CSV file directly into SQLite, you will need to replace it with an actual `NULL` value.
-This is because there is no way to express an empty value in SQLite when importing
-a CSV file. For example, importing the `membership.csv` file and updating the rows
-would be done like this:
-
-    .import membership.csv membership --csv --skip 1
-    UPDATE membership SET exit_date = NULL WHERE exit_date = 'NULL';
-
-Use a similar `UPDATE` statement for all columns where NULL literals are found. Of course,
-these columns need to be defined in the database schema as allowing NULL values.
-
 The `country_code` column values are the standard
 [ISO 3166-1 Alpha-2 codes](https://www.iso.org/iso-3166-country-codes.html)
 two-letter codes of the countries,
@@ -78,8 +66,8 @@ Enter the `.quit` command to return to the shell.
 
 After creating the database and the tables, you can populate it in two ways:
 
-    * By generating an SQL script that inserts the rows and reading it into SQLite
-    * By importing the CSV files into the database using SQLite
+* By generating an SQL script that inserts the rows and reading it into SQLite
+* By importing the CSV files into the database using SQLite
 
 ### Generate SQL script and read
 
@@ -134,12 +122,29 @@ Then enter the following commands in the `sqlite3` tool:
 The order is important here, because you can't create countries before their
 capital cities exist, and so on.
 
+Missing column values are expressed as the literal string `NULL`, so if you import
+a CSV file directly into SQLite, you will need to replace it with an actual `NULL` value.
+This is because there is no way to express an empty value in SQLite when importing
+a CSV file.
+
+Currently the only tables that can have NULL values are `country` and `membership`.
+After the CSV files have been imported, you can update the relevant rows like this:
+
+    UPDATE country SET national_day = NULL where national_day = 'NULL';
+    UPDATE membership SET euro_date = NULL where euro_date = 'NULL';
+    UPDATE membership SET schengen_date = NULL where schengen_date = 'NULL';
+    UPDATE membership SET exit_date = NULL WHERE exit_date = 'NULL';
+
+These columns are defined in the database schema as allowing NULL values.
+
 Verify that the data has been imported into the database with a `SELECT` statement
 such as:
 
 ```
 SELECT country_code FROM country;
 ```
+
+Exit SQLite with the `.quit` command.
 
 ## Example queries
 
