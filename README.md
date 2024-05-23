@@ -86,12 +86,9 @@ After creating the database and the tables, you can populate it in two ways:
 Use the Python script `makeinserts.py` to add create an SQL script that
 adds all the rows to the database:
 
-    `python3 makeinserts.py`
+    `python3 makeinserts.py populate.sql`
 
-You should redirect the results of this script into a file, so that you
-can import it into SQLite:
-
-    `python3 makeinserts.py >populate.sql`
+The parameter is a file to write the INSERT statements to.
 
 The script requires Python 3.
 
