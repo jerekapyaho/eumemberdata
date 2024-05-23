@@ -17,12 +17,8 @@ As per [RFC 4180](https://tools.ietf.org/html/rfc4180),
 the files use a CR LF line delimiter. They also have a header row,
 used to indicate database column names for further use.
 
-The `country_code` column values are the ISO 3166-1 Alpha-2 codes of the countries,
-with the following exceptions due to common usage by the European Commission:
-Greece is represented with `EL`instead of `GR`, and the United Kingdom is
-represented with `GB` instead of `UK`.
-
-The `language_code` column values are the ISO 639-1 Alpha-2 codes of the languages.
+Because there is a header row, you need to use the option `--skip 1` if
+you import a CSV file into SQLite, along with the `--csv` option.
 
 The CSV data files are:
 * `city_name.csv` -- the names of the capital cities in all official EU languages
@@ -32,11 +28,33 @@ The CSV data files are:
 * `membership.csv` -- country-specific dates for joining the union, the eurozone etc., also exit
 * `union_name.csv` -- the name of the EU in all official EU languages
 
+Missing column values are expressed as the literal string `NULL`, so if you import
+a CSV file directly into SQLite, you will need to replace it with an actual `NULL` value.
+This is because there is no way to express an empty value in SQLite when importing
+a CSV file. For example, importing the `membership.csv` file and updating the rows
+would be done like this:
+
+    .import membership.csv membership --csv --skip 1
+    UPDATE membership SET exit_date = NULL WHERE exit_date = 'NULL';
+
+Use a similar `UPDATE` statement for all columns where NULL literals are found. Of course,
+these columns need to be defined in the database schema as allowing NULL values.
+
+The `country_code` column values are the standard
+[ISO 3166-1 Alpha-2 codes](https://www.iso.org/iso-3166-country-codes.html)
+two-letter codes of the countries,
+with the following exceptions due to common usage by the European Commission:
+Greece is represented with `EL`instead of `GR`, and the United Kingdom is
+represented with `GB` instead of `UK`.
+
+The `language_code` column values are the standard
+[ISO 639-1 Alpha-2](https://www.iso.org/iso-639-language-code) two-letter codes of the languages.
+
 ## Creating the database
 
 You can use the `create.sql` script to create an SQLite 3 database.
 However, the script does not populate the database. For that you can use
-the `populate.py` Python script (see below).
+the `makeinserts.py` Python script (see below).
 
 On macOS the `sqlite3` utility is already on your system. To install
 SQLite on Windows, see the [instructions](https://www.sqlite.org/cli.html).
@@ -58,44 +76,41 @@ Enter the `.quit` command to return to the shell.
 
 ## Populating the database
 
-### Using a Python script
+After creating the database and the tables, you can populate it in two ways:
 
-Use the Python script `populate.py` to add rows to the database:
+    * By generating an SQL script that inserts the rows and reading it into SQLite
+    * By importing the CSV files into the database using SQLite
 
-`python3 populate.py`
+### Generate SQL script and read
 
-You should see roughly the following output:
+Use the Python script `makeinserts.py` to add create an SQL script that
+adds all the rows to the database:
 
-```
-Processing country.csv
-Processing country_name.csv
-Processing city.csv
-Processing city_name.csv
-Processing union_name.csv
-Processing membership.csv
-Done.
-```
+    `python3 makeinserts.py`
+
+You should redirect the results of this script into a file, so that you
+can import it into SQLite:
+
+    `python3 makeinserts.py >populate.sql`
 
 The script requires Python 3.
 
-When you open the database file again, you should be able to make queries
-against the data:
+Ensure that the database and the tables have been created, for example
+using the `create.sql` (see above).
 
-```
-% sqlite3 eumemberdata.sqlite3
-SQLite version 3.32.3 2020-06-18 14:16:19
-Enter ".help" for usage hints.
-sqlite> select country_code, exit_date from membership where exit_date != '';
-GB|2020-01-31
-```
+Start up SQLite and issue the command:
 
-### Using the sqlite3 command-line tool
+    .read populate.sql
+
+### Import CSV files
 
 The `sqlite3` command-line tool can import data from CSV files into database tables.
 However, it treats the files differently depending on whether the table already
 exists or not.
 
-We'd like to create all the database tables first with our creation SQL script, and import the data separately. Because the CSV files in this repository have a header row with the column names, we need to instruct `sqlite3` to skip the first row.
+We'd like to create all the database tables first with our creation SQL script,
+and import the data separately. Because the CSV files in this repository have a
+header row with the column names, we need to instruct `sqlite3` to skip the first row.
 
 Ensure that you have created the database and all the tables as detailed above,
 and that the database is empty. To prevent constraint violations, issue the SQL
@@ -105,7 +120,7 @@ command:
 PRAGMA foreign_keys=ON;
 ```
 
-Then enter the following commands in the sqlite3 tool:
+Then enter the following commands in the `sqlite3` tool:
 
 ```
 .import --csv --skip 1 city.csv city
@@ -119,25 +134,27 @@ Then enter the following commands in the sqlite3 tool:
 The order is important here, because you can't create countries before their
 capital cities exist, and so on.
 
-Verify that the data has been imported into the database with a SELECT statement
+Verify that the data has been imported into the database with a `SELECT` statement
 such as:
 
 ```
 SELECT country_code FROM country;
 ```
 
-### With SQL INSERT statements
-
-Ensure that the database and the tables have been created, for example
-using the `create.sql` file in `sqlite3` (see above).
-
-Read the file `populate.sql` into the `sqlite3` tool:
-
-`.read populate.sql`
-
 ## Example queries
 
-Here are some example queries to the database. You may want to adjust the
+When you open the database file again, you should be able to make queries
+against the data:
+
+```
+% sqlite3 eumemberdata.sqlite3
+SQLite version 3.43.2 2023-10-10 13:08:14
+Enter ".help" for usage hints.
+sqlite> select country_code, exit_date from membership where exit_date is not null;
+GB|2020-01-31
+```
+
+Here are some example queries to the database. You may first want to adjust the
 display options of `sqlite3`:
 
 ```
@@ -155,21 +172,22 @@ JOIN country ON country.country_code = country_name.country_code
 WHERE language_code = 'en';
 ```
 
-Get all the current member countries (note that missing dates are currently
-indicated by empty strings, not NULL values):
+Get all the current member countries, i.e. countries that have a
+`NULL` value in the `exit_date` column in the `membership` table:
 
 ```
-SELECT country_code FROM membership WHERE exit_date = '';
+SELECT country_code FROM membership WHERE exit_date IS NULL;
 ```
 
 Note that the result set should not contain `GB`, because Great Britain
-has exited the European Union.
+has exited the European Union, so it has a non-`NULL` value for
+`exit_date`.
 
 Get the English language names of all the current member countries in English:
 
 ```
 SELECT name FROM country_name
-JOIN (SELECT country_code FROM membership WHERE exit_date = '') AS current_member
+JOIN (SELECT country_code FROM membership WHERE exit_date IS NULL) AS current_member
     ON country_name.country_code = current_member.country_code
 WHERE language_code = 'en';
 ```
@@ -184,7 +202,7 @@ JOIN city ON country.capital = city.city_id;
 Get the English language names of all the capital cities:
 
 ```
-SELECT name FROM city_name
+SELECT city_id, name FROM city_name
 WHERE language_code = 'en';
 ```
 

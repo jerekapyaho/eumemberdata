@@ -20,3 +20,6 @@ derby.log
 
 # PostgreSQL
 *.dump
+
+# Application files that are regenerated
+populate.sql

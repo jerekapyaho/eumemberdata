@@ -41,10 +41,10 @@ for table_name in table_names:
                     if is_integer(column) or is_float(column):
                         final_row.append(str(column))
                     else:
-                        if column != '':
-                            final_row.append(f"'{column}'")
-                        else:
+                        if column == 'NULL':
                             final_row.append('NULL')
+                        else:
+                            final_row.append(f"'{column}'")
                 values = ', '.join(final_row)
                 statement = (f'INSERT INTO {table_name} ({column_names}) VALUES({values});')
                 print(statement)

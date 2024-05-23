@@ -1433,7 +1433,7 @@ INSERT INTO membership (country_code, union_date, euro_date, schengen_date, exit
 INSERT INTO membership (country_code, union_date, euro_date, schengen_date, exit_date) VALUES('BE', '1958-01-01', '1999-01-01', '1995-03-26', NULL);
 INSERT INTO membership (country_code, union_date, euro_date, schengen_date, exit_date) VALUES('BG', '2007-01-01', NULL, NULL, NULL);
 INSERT INTO membership (country_code, union_date, euro_date, schengen_date, exit_date) VALUES('HR', '2013-07-01', '2023-01-01', '2023-01-01', NULL);
-INSERT INTO membership (country_code, union_date, euro_date, schengen_date, exit_date) VALUES('CY', '2004-05-01', '2008-01-01', NULL, NULL);
+INSERT INTO membership (country_code, union_date, euro_date, schengen_date, exit_date) VALUES('CY', '2004-05-01', '2008-01-01', '', NULL);
 INSERT INTO membership (country_code, union_date, euro_date, schengen_date, exit_date) VALUES('CZ', '2004-05-01', NULL, '2007-12-21', NULL);
 INSERT INTO membership (country_code, union_date, euro_date, schengen_date, exit_date) VALUES('DK', '1973-01-01', NULL, '2001-03-25', NULL);
 INSERT INTO membership (country_code, union_date, euro_date, schengen_date, exit_date) VALUES('EE', '2004-01-01', '2011-01-01', '2007-12-21', NULL);
@@ -1442,7 +1442,7 @@ INSERT INTO membership (country_code, union_date, euro_date, schengen_date, exit
 INSERT INTO membership (country_code, union_date, euro_date, schengen_date, exit_date) VALUES('DE', '1958-01-01', '1999-01-01', '1995-03-26', NULL);
 INSERT INTO membership (country_code, union_date, euro_date, schengen_date, exit_date) VALUES('EL', '1981-01-01', '2001-01-01', '2000-01-01', NULL);
 INSERT INTO membership (country_code, union_date, euro_date, schengen_date, exit_date) VALUES('HU', '2004-01-01', NULL, '2007-12-21', NULL);
-INSERT INTO membership (country_code, union_date, euro_date, schengen_date, exit_date) VALUES('IE', '1973-01-01', '1999-01-01', NULL, NULL);
+INSERT INTO membership (country_code, union_date, euro_date, schengen_date, exit_date) VALUES('IE', '1973-01-01', '1999-01-01', '', NULL);
 INSERT INTO membership (country_code, union_date, euro_date, schengen_date, exit_date) VALUES('IT', '1958-01-01', '1999-01-01', '1997-10-26', NULL);
 INSERT INTO membership (country_code, union_date, euro_date, schengen_date, exit_date) VALUES('LV', '2004-05-01', '2014-01-01', '2007-12-21', NULL);
 INSERT INTO membership (country_code, union_date, euro_date, schengen_date, exit_date) VALUES('LT', '2004-05-01', '2015-01-01', '2007-12-21', NULL);
