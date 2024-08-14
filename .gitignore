@@ -23,3 +23,6 @@ derby.log
 
 # Application files that are regenerated
 populate.sql
+
+# .NET
+*.sln

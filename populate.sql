@@ -727,7 +727,7 @@ INSERT INTO country (country_code, capital, area, population, population_year, c
 INSERT INTO country (country_code, capital, area, population, population_year, currency_code, national_day) VALUES('PL', 'warsaw', 312679, 38179800, 2021, 'PLN', '--11-11');
 INSERT INTO country (country_code, capital, area, population, population_year, currency_code, national_day) VALUES('PT', 'lisbon', 92225, 10344802, 2021, 'EUR', '--12-01');
 INSERT INTO country (country_code, capital, area, population, population_year, currency_code, national_day) VALUES('RO', 'bucharest', 238391, 19038098, 2022, 'RON', '--05-10');
-INSERT INTO country (country_code, capital, area, population, population_year, currency_code, national_day) VALUES('SE', 'stockholm', 438574, 10481937, 2022, 'EUR', '--06-06');
+INSERT INTO country (country_code, capital, area, population, population_year, currency_code, national_day) VALUES('SE', 'stockholm', 438574, 10481937, 2022, 'SEK', '--06-06');
 INSERT INTO country (country_code, capital, area, population, population_year, currency_code, national_day) VALUES('SK', 'bratislava', 49035, 5460185, 2022, 'EUR', '--07-17');
 INSERT INTO country (country_code, capital, area, population, population_year, currency_code, national_day) VALUES('SI', 'ljubljana', 20273, 2108708, 2021, 'EUR', '--12-26');
 -- country_name.csv
